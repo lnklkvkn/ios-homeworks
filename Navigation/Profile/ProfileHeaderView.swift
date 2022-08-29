@@ -36,7 +36,7 @@ class ProfileHeaderView: UIView {
     }()
     
     private lazy var statusButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 16, y: 138, width: 382, height: 50))
+        let button = UIButton(frame: CGRect(x: 16, y: 165, width: 382, height: 50))
         button.backgroundColor = .systemBlue
         button.setTitle("Show status", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
@@ -51,14 +51,35 @@ class ProfileHeaderView: UIView {
         return button
     }()
     
+    private lazy var changeStatusLabelText : UITextField = {
+        let textField = UITextField(frame: CGRect (x: 138, y: 110, width: 260, height: 40))
+        textField.backgroundColor = .white
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.layer.cornerRadius = 12
+        textField.font = UIFont(name: "HelveticaNeue-Regular", size: 15)
+        textField.textColor = UIColor.black
+        
+        textField.addTarget(self, action: #selector(self.statusTextChanged), for: .editingChanged)
+        
+        return textField
+    }()
+    
     @objc private func didTapButton() {
-        print(statusLabel.text as Any? ?? "Ops")
+        statusLabel.text = statusText
     }
 
+    private var statusText: String = ""
+
+    @objc private func statusTextChanged(_ textField: UITextField) {
+        statusText = textField.text ?? "no status"
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupView()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -69,6 +90,7 @@ class ProfileHeaderView: UIView {
         self.addSubview(self.nameLabel)
         self.addSubview(self.statusButton)
         self.addSubview(self.statusLabel)
+        self.addSubview(self.changeStatusLabelText)
     }
     
     
