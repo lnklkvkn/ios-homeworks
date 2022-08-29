@@ -16,13 +16,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         self.window = UIWindow(windowScene: windowScene)
-        let navController = UINavigationController(rootViewController: FeedViewController())
-        let secondItemController = ProfileViewController()
+        let feedNavController = UINavigationController(rootViewController: FeedViewController())
+        let profileNavController = UINavigationController(rootViewController: ProfileViewController())
+       // let secondItemController = ProfileViewController()
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [ navController , secondItemController]
+        tabBarController.viewControllers = [ feedNavController , profileNavController]
         tabBarController.viewControllers?.enumerated().forEach {
             $1.tabBarItem.title = $0 == 0 ? "Feed" : "Profile"
-            $1.tabBarItem.image = $0 == 0 ? UIImage(systemName: "newspaper") : UIImage(systemName: "smiley")
+            $1.tabBarItem.image = $0 == 0 ? UIImage(systemName: "house.fill") : UIImage(systemName: "person.fill")
         }
         self.window?.rootViewController = tabBarController
         self.window?.makeKeyAndVisible()
