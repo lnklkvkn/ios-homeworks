@@ -21,11 +21,12 @@ class ProfileViewController: UIViewController {
     }()
     
     private lazy var profileHeaderView: ProfileHeaderView = {
-        let profileHeaderView = ProfileHeaderView(frame: CGRect(x: 0, y: 90, width: 414, height: 720))
-        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
-        return profileHeaderView
-    }()
+         let profileHeaderView = ProfileHeaderView(frame: CGRect(x: 0, y: 90, width: 414, height: 720))
+         profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
+         return profileHeaderView
+     }()
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Profile"

@@ -101,19 +101,19 @@ class ProfileHeaderView: UIView {
     
     private func setupView() {
         self.backgroundColor = .lightGray
-        
+
         self.addSubview(self.avatarImageView)
         self.addSubview(self.stackView)
         self.stackView.addArrangedSubview(self.nameLabel)
         self.stackView.addArrangedSubview(self.statusLabel)
         self.addSubview(self.statusLabelTextField)
         self.addSubview(self.setStatusButton)
-        
+
         let avatarImageViewContrains = self.avatarImageViewContrains()
         let stackViewContrains = self.stackViewContrains()
         let statusLabelTextFieldContrains = self.statusLabelTextFieldContrains()
         let setStatusButtonContrains = self.setStatusButtonContrains()
- 
+
         NSLayoutConstraint.activate(avatarImageViewContrains + stackViewContrains + statusLabelTextFieldContrains + setStatusButtonContrains)
     }
     
@@ -148,7 +148,7 @@ class ProfileHeaderView: UIView {
     }
     
     private func setStatusButtonContrains() -> [NSLayoutConstraint] {
-        let topConstraint = self.setStatusButton.topAnchor.constraint(equalTo: self.statusLabelTextField.bottomAnchor, constant: 15)
+        let topConstraint = self.setStatusButton.topAnchor.constraint(equalTo: self.statusLabelTextField.bottomAnchor, constant: 16)
         let leadingConstraint = self.setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16)
         let trailingConstraint = self.setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         return [
