@@ -66,4 +66,4 @@ class FeedViewController: UIViewController {
     
 }
 
-var post = Post(title: "My post!")
+var post = PostTitle(title: "My post!")
