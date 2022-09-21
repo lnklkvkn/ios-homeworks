@@ -57,8 +57,6 @@ class PostTableViewCell: UITableViewCell {
         self.setupView()
     }
     
-
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setupView()
