@@ -17,16 +17,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.window = UIWindow(windowScene: windowScene)
         let feedNavController = UINavigationController(rootViewController: FeedViewController())
-        let profileNavController = UINavigationController(rootViewController: ProfileViewController())
-       // let secondItemController = ProfileViewController()
+        let logInViewController = UINavigationController(rootViewController: LogInViewController())
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [ feedNavController , profileNavController]
+        tabBarController.viewControllers = [ feedNavController , logInViewController]
         tabBarController.viewControllers?.enumerated().forEach {
             $1.tabBarItem.title = $0 == 0 ? "Feed" : "Profile"
             $1.tabBarItem.image = $0 == 0 ? UIImage(systemName: "house.fill") : UIImage(systemName: "person.fill")
         }
         self.window?.rootViewController = tabBarController
         self.window?.makeKeyAndVisible()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

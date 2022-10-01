@@ -9,54 +9,81 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private lazy var someButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 364, width: 414, height: 50))
-        button.backgroundColor = .systemBlue
-        button.setTitle("Some button", for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.layer.cornerRadius = 4
-        button.translatesAutoresizingMaskIntoConstraints = false
+    private var posts = viewModel
+    
+    private lazy var tableView: UITableView = {
 
-        return button
+        var tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "HeaderView")
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "CustomCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 500
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
     }()
     
-    private lazy var profileHeaderView: ProfileHeaderView = {
-        let profileHeaderView = ProfileHeaderView(frame: CGRect(x: 0, y: 90, width: 414, height: 720))
-        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
-        return profileHeaderView
-    }()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Profile"
-        self.view.backgroundColor = .white
-        
-        self.view.addSubview(self.profileHeaderView)
-        self.view.addSubview(someButton)
-        NSLayoutConstraint.activate(profileViewContraints())
-        NSLayoutConstraint.activate(someButtonContrains())
-    }
-
-    private func someButtonContrains() -> [NSLayoutConstraint] {
-        let bottomConstraint = NSLayoutConstraint(item: self.someButton, attribute: .bottom, relatedBy: .equal, toItem: self.view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0)
-        let leadingConstraint = self.someButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
-        let trailingConstraint = self.someButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        return [
-            bottomConstraint, leadingConstraint,trailingConstraint
-        ]
+        self.setupView()
+        self.setupNavigationBar()
     }
     
-    private func profileViewContraints() -> [NSLayoutConstraint] {
-        let topContraint = NSLayoutConstraint(item: self.profileHeaderView, attribute: .top, relatedBy: .equal, toItem: self.view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 0)
-        let leftContraint = self.profileHeaderView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
-        let rightContraint = self.profileHeaderView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-  
-        let heightAnchor = self.profileHeaderView.heightAnchor.constraint(equalToConstant: 220)
+    private func setupNavigationBar(){
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Profile"
         
-        return [
-            topContraint, leftContraint, rightContraint, heightAnchor
-        ]
+    }
+    private func setupView() {
+        view.backgroundColor = .systemBackground
+        
+        view.addSubview(tableView)
+        
+        NSLayoutConstraint.activate([
+            self.tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            self.tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            self.tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            self.tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
 }
 
+
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        if section == 0 {
+            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HeaderView") else { return nil }
+            return header
+        } else {
+        return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        posts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? PostTableViewCell {
+            cell.autorLabel.text = posts[indexPath.row].author
+            cell.postImageView.image = UIImage(named: posts[indexPath.row].image)
+            cell.descriptionLabel.text = posts[indexPath.row].description
+            cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
+            cell.viewsLabel.text = "Views: \(posts[indexPath.row].views)"
+            return cell
+        }
+        return UITableViewCell()
+    }
+}
+ 
+
+
+
+        
+    
