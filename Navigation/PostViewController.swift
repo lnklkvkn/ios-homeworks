@@ -26,7 +26,7 @@ class PostViewController: UIViewController {
     
 }
 
-struct Post {
+struct PostTitle {
     var title: String
 }
 
