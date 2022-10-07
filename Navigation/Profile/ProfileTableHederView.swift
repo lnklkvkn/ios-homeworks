@@ -76,6 +76,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         textField.layer.cornerRadius = 12
         textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         textField.textColor = .black
+        textField.placeholder = "  Set your status..."
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(self.statusTextChanged), for: .editingChanged)
         

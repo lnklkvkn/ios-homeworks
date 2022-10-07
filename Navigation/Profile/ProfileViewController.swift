@@ -9,13 +9,17 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private var posts = viewModel
     
+    private var posts = viewModel
+    private var array = [photos]
+
     private lazy var tableView: UITableView = {
 
         var tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "HeaderView")
+        tableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "DefHeader")
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "CustomCell")
+        tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosCell")
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableView.automaticDimension
@@ -25,7 +29,6 @@ class ProfileViewController: UIViewController {
     }()
     
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
@@ -37,6 +40,7 @@ class ProfileViewController: UIViewController {
         navigationItem.title = "Profile"
         
     }
+    
     private func setupView() {
         view.backgroundColor = .systemBackground
         
@@ -52,7 +56,6 @@ class ProfileViewController: UIViewController {
     
 }
 
-
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -61,29 +64,61 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HeaderView") else { return nil }
             return header
         } else {
-        return nil
+        return tableView.dequeueReusableHeaderFooterView(withIdentifier: "DefHeader")
         }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        posts.count
+        if section == 0 {
+            return 1
+        } else {
+            return posts.count
+        }
     }
     
+    private func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        0
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? PostTableViewCell {
-            cell.autorLabel.text = posts[indexPath.row].author
-            cell.postImageView.image = UIImage(named: posts[indexPath.row].image)
-            cell.descriptionLabel.text = posts[indexPath.row].description
-            cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
-            cell.viewsLabel.text = "Views: \(posts[indexPath.row].views)"
-            return cell
-        }
+        
+
+        if indexPath.section == 1 {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? PostTableViewCell {
+                cell.autorLabel.text = posts[indexPath.row].author
+                cell.postImageView.image = UIImage(named: posts[indexPath.row].image)
+                cell.descriptionLabel.text = posts[indexPath.row].description
+                cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
+                cell.viewsLabel.text = "Views: \(posts[indexPath.row].views)"
+                return cell
+            }
+        } else if indexPath.section == 0 {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "PhotosCell",for: indexPath) as? PhotosTableViewCell {
+                    cell.photosLabel.text = array[indexPath.row].title
+                    cell.arrowImageView.image = UIImage(systemName: array[indexPath.row].arrow)
+                    cell.firstPhotoImageView.image = UIImage(named: array[indexPath.row].fPhoto)
+                    cell.secondPhotoImageView.image = UIImage(named: array[indexPath.row].sPhoto)
+                    cell.thirdPhotoImageView.image = UIImage(named: array[indexPath.row].tPhoto)
+                    cell.fourthPhotoImageView.image = UIImage(named: array[indexPath.row].fourPhoto)
+                    return cell
+                }
+            }
         return UITableViewCell()
     }
-}
- 
-
-
-
-        
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        if indexPath.section == 0 {
+            self.tableView.deselectRow(at: indexPath, animated: true)
+            let vc = PhotosViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+}
+
+
+    
+
