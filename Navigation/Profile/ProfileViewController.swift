@@ -64,7 +64,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HeaderView") else { return nil }
             return header
         } else {
-        return tableView.dequeueReusableHeaderFooterView(withIdentifier: "DefHeader")
+        return nil
         }
     }
     
@@ -73,6 +73,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         if section == 0 {
             return 1
         } else {
@@ -80,13 +81,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    private func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        0
-    }
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-
         if indexPath.section == 1 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? PostTableViewCell {
                 cell.autorLabel.text = posts[indexPath.row].author
@@ -95,6 +91,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
                 cell.viewsLabel.text = "Views: \(posts[indexPath.row].views)"
                 return cell
+                
             }
         } else if indexPath.section == 0 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "PhotosCell",for: indexPath) as? PhotosTableViewCell {
@@ -110,7 +107,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         return UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         if indexPath.section == 0 {
             self.tableView.deselectRow(at: indexPath, animated: true)
             let vc = PhotosViewController()
@@ -118,6 +116,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 }
+    
+
+
+
+
 
 
     
