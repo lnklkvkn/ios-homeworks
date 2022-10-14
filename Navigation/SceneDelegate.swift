@@ -19,6 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let feedNavController = UINavigationController(rootViewController: FeedViewController())
         let logInViewController = UINavigationController(rootViewController: LogInViewController())
         let tabBarController = UITabBarController()
+
         tabBarController.viewControllers = [ feedNavController , logInViewController]
         tabBarController.viewControllers?.enumerated().forEach {
             $1.tabBarItem.title = $0 == 0 ? "Feed" : "Profile"
