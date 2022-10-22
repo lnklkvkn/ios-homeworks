@@ -19,7 +19,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return view
     }()
     
-
      lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "cat")
@@ -32,7 +31,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return imageView
     }()
 
-    
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Catty Clappy"
@@ -93,7 +91,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         setupView()
     }
     
-    
     @objc private func didTapButton() {
         statusLabel.text = statusText
     }
@@ -110,6 +107,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         self.addSubview(self.statusLabel)
         self.addSubview(self.statusLabelTextField)
         self.addSubview(self.setStatusButton)
+        
 
         NSLayoutConstraint.activate([
             
@@ -126,13 +124,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             nameLabel.topAnchor.constraint(equalTo: self.profileHeaderView.topAnchor, constant: 27),
             nameLabel.leadingAnchor.constraint(equalTo: self.avatarImageView.trailingAnchor, constant: 16),
             
-            
-       //     statusLabel.bottomAnchor.constraint(equalTo: self.statusLabelTextField.bottomAnchor),
             statusLabel.leadingAnchor.constraint(equalTo: self.avatarImageView.trailingAnchor, constant: 16),
             statusLabel.trailingAnchor.constraint(equalTo: self.profileHeaderView.trailingAnchor, constant: -16),
             statusLabel.topAnchor.constraint(equalTo: self.avatarImageView.bottomAnchor, constant: -33),
 
-            
             statusLabelTextField.topAnchor.constraint(equalTo: self.statusLabel.bottomAnchor, constant: 4),
             statusLabelTextField.heightAnchor.constraint(equalToConstant: 40),
             statusLabelTextField.leadingAnchor.constraint(equalTo: self.avatarImageView.trailingAnchor, constant: 16),
