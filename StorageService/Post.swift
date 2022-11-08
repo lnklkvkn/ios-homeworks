@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct Post {
+public struct Post {
     
-    var author: String
-    var description: String
-    var image: String
-    var likes: Int 
-    var views: Int
+    public var author: String
+    public var description: String
+    public var image: String
+    public var likes: Int
+    public var views: Int
 
 }
 
@@ -70,4 +70,4 @@ var postC = Post(author: Autors.c.rawValue, description: Descriptions.lermontov.
 
 var postD = Post(author: Autors.d.rawValue, description: Descriptions.dostoevsky.rawValue, image: Image.dostoevsky.rawValue, likes: Likes.d.rawValue, views: Views.d.rawValue)
 
-let viewModel = [postA, postB, postC, postD,]
+public let viewModel = [postA, postB, postC, postD]

@@ -15,20 +15,6 @@
                     <view key="view" contentMode="scaleToFill" id="C6G-Kf-QEM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="square.and.arrow.up" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="zTq-iN-Rwp">
-                                <rect key="frame" x="218" y="473" width="19" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="arrow.right.doc.on.clipboard" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="oZY-C4-cBx">
-                                <rect key="frame" x="248" y="482" width="21" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="arrow.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="3ZY-sx-TIw">
-                                <rect key="frame" x="177" y="380" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="4SM-5A-asc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
@@ -39,9 +25,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrow.right" catalog="system" width="32" height="32"/>
-        <image name="arrow.right.doc.on.clipboard" catalog="system" width="32" height="32"/>
-        <image name="square.and.arrow.up" catalog="system" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

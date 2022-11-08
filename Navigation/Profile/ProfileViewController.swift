@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
     
     
-    private var posts = viewModel
+    private var posts = StorageService.viewModel
     private var array = [photos]
-    
+
     var startPoint: CGPoint?
 
     private lazy var tableView: UITableView = {
@@ -77,7 +78,14 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupView() {
+        
+        #if DEBUG
         view.backgroundColor = .systemBackground
+        
+        #else
+        view.backgroundColor = .red
+        
+        #endif
         
         view.addSubview(tableView)
         view.addSubview(screenView)
