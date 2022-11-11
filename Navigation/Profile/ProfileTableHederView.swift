@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
     
@@ -108,38 +109,45 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         self.addSubview(self.statusLabelTextField)
         self.addSubview(self.setStatusButton)
         
-
-        NSLayoutConstraint.activate([
-            
-            profileHeaderView.topAnchor.constraint(equalTo: topAnchor),
-            profileHeaderView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            profileHeaderView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            profileHeaderView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
-            avatarImageView.topAnchor.constraint(equalTo: profileHeaderView.topAnchor, constant: 16),
-            avatarImageView.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: 16),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 100),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 100),
-            
-            nameLabel.topAnchor.constraint(equalTo: self.profileHeaderView.topAnchor, constant: 27),
-            nameLabel.leadingAnchor.constraint(equalTo: self.avatarImageView.trailingAnchor, constant: 16),
-            
-            statusLabel.leadingAnchor.constraint(equalTo: self.avatarImageView.trailingAnchor, constant: 16),
-            statusLabel.trailingAnchor.constraint(equalTo: self.profileHeaderView.trailingAnchor, constant: -16),
-            statusLabel.topAnchor.constraint(equalTo: self.avatarImageView.bottomAnchor, constant: -33),
-
-            statusLabelTextField.topAnchor.constraint(equalTo: self.statusLabel.bottomAnchor, constant: 4),
-            statusLabelTextField.heightAnchor.constraint(equalToConstant: 40),
-            statusLabelTextField.leadingAnchor.constraint(equalTo: self.avatarImageView.trailingAnchor, constant: 16),
-            statusLabelTextField.trailingAnchor.constraint(equalTo: self.profileHeaderView.trailingAnchor, constant: -16),
-            
-            setStatusButton.topAnchor.constraint(equalTo: self.statusLabelTextField.bottomAnchor, constant: 20),
-            setStatusButton.leadingAnchor.constraint(equalTo: self.profileHeaderView.leadingAnchor, constant: 16),
-            setStatusButton.trailingAnchor.constraint(equalTo: self.profileHeaderView.trailingAnchor, constant: -16),
-            setStatusButton.heightAnchor.constraint(equalToConstant: 50),
-            setStatusButton.bottomAnchor.constraint(equalTo: self.profileHeaderView.bottomAnchor, constant: -16),
-        ])
+        profileHeaderView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        
+        avatarImageView.snp.makeConstraints { make in
+            make.top.equalTo(profileHeaderView.snp.top).offset(16)
+            make.leading.equalTo(profileHeaderView.snp.leading).offset(16)
+            make.height.width.equalTo(100)
+        }
+        
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalTo(profileHeaderView.snp.top).offset(27)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(16)
+        }
+        
+        statusLabel.snp.makeConstraints { make in
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(16)
+            make.trailing.equalTo(profileHeaderView.snp.trailing).inset(16)
+            make.top.equalTo(avatarImageView.snp.bottom).inset(33)
+        }
+        
+        statusLabelTextField.snp.makeConstraints { make in
+            make.top.equalTo(statusLabel.snp.bottom).offset(4)
+            make.height.equalTo(40)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(16)
+            make.trailing.equalTo(profileHeaderView.snp.trailing).offset(-16)
+        }
+        
+        setStatusButton.snp.makeConstraints { make in
+            make.top.equalTo(statusLabelTextField.snp.bottom).offset(20)
+            make.leading.equalTo(profileHeaderView.snp.leading).offset(16)
+            make.trailing.equalTo(profileHeaderView.snp.trailing).inset(16)
+            make.bottom.equalTo(profileHeaderView.snp.bottom).inset(16)
+        }
     }
+
 }
     
 

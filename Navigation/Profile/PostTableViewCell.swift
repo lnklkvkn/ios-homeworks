@@ -6,17 +6,10 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
-        
-    private(set) lazy var autorLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
-        label.numberOfLines = 2
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    
     
     private(set) lazy var postImageView: UIImageView = {
         let imageView = UIImageView()
@@ -24,7 +17,17 @@ class PostTableViewCell: UITableViewCell {
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        
         return imageView
+    }()
+    
+    private(set) lazy var autorLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .black
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     private(set) lazy var descriptionLabel: UILabel = {
