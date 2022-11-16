@@ -13,6 +13,10 @@
 		FD1204B828B6320C006AE0EE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1204B728B6320C006AE0EE /* ProfileViewController.swift */; };
 		FD16BA5828ECC2E90086D211 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD16BA5728ECC2E90086D211 /* PhotosViewController.swift */; };
 		FD37152728C752B800616C30 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD37152628C752B800616C30 /* LogInViewController.swift */; };
+		FD66710A2925389A00C220CB /* Pods-Navigation.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B1EEDFAC2248B7D0D53AC528 /* Pods-Navigation.debug.xcconfig */; };
+		FD66710B292538A000C220CB /* Pods-Navigation.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 6786617717040DA047B0F930 /* Pods-Navigation.release.xcconfig */; };
+		FD66710C292538A300C220CB /* Pods-StorageService.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = ED40F20ECC1ECCECE7C8DF1B /* Pods-StorageService.debug.xcconfig */; };
+		FD66710D292538A500C220CB /* Pods-StorageService.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 9FF765AE01323E1DA2487850 /* Pods-StorageService.release.xcconfig */; };
 		FD6C6D7D291C43C3004A505F /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = FD6C6D7C291C43C3004A505F /* iOSIntPackage */; };
 		FD75978529184208003C6EE8 /* StorageService.docc in Sources */ = {isa = PBXBuildFile; fileRef = FD75978429184208003C6EE8 /* StorageService.docc */; };
 		FD75979329184208003C6EE8 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = FD75978329184208003C6EE8 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -300,7 +304,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDC74F30289E8C730009604F /* LaunchScreen.storyboard in Resources */,
+				FD66710C292538A300C220CB /* Pods-StorageService.debug.xcconfig in Resources */,
 				FDC74F2D289E8C730009604F /* Assets.xcassets in Resources */,
+				FD66710D292538A500C220CB /* Pods-StorageService.release.xcconfig in Resources */,
+				FD66710B292538A000C220CB /* Pods-Navigation.release.xcconfig in Resources */,
+				FD66710A2925389A00C220CB /* Pods-Navigation.debug.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
