@@ -31,7 +31,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return imageView
     }()
 
-    private lazy var nameLabel: UILabel = {
+    lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Catty Clappy"
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -40,7 +40,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return label
     }()
     
-    private lazy var statusLabel: UILabel = {
+    lazy var statusLabel: UILabel = {
         let label = UILabel()
         label.text = "Waiting for something..."
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)

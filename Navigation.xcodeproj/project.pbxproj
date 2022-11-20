@@ -19,6 +19,8 @@
 		FD863E4228AE666000475D1C /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD863E4128AE666000475D1C /* InfoViewController.swift */; };
 		FD8F446228ABBF27003041D1 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8F446128ABBF27003041D1 /* FeedViewController.swift */; };
 		FD8F446428ABC35A003041D1 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8F446328ABC35A003041D1 /* PostViewController.swift */; };
+		FD9536142927D8F100124C16 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9536132927D8F100124C16 /* UserModel.swift */; };
+		FD9536162927DA6E00124C16 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9536152927DA6E00124C16 /* UserService.swift */; };
 		FDB41F8628EF2E390071B88D /* CustomPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB41F8528EF2E390071B88D /* CustomPhotoCell.swift */; };
 		FDC74F24289E8C6A0009604F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC74F23289E8C6A0009604F /* AppDelegate.swift */; };
 		FDC74F26289E8C6A0009604F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC74F25289E8C6A0009604F /* SceneDelegate.swift */; };
@@ -65,6 +67,8 @@
 		FD863E4128AE666000475D1C /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		FD8F446128ABBF27003041D1 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		FD8F446328ABC35A003041D1 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		FD9536132927D8F100124C16 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		FD9536152927DA6E00124C16 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		FDB41F8528EF2E390071B88D /* CustomPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPhotoCell.swift; sourceTree = "<group>"; };
 		FDC74F20289E8C6A0009604F /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDC74F23289E8C6A0009604F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +124,15 @@
 			path = StorageService;
 			sourceTree = "<group>";
 		};
+		FD9536122927D8C000124C16 /* HW_4.3 */ = {
+			isa = PBXGroup;
+			children = (
+				FD9536132927D8F100124C16 /* UserModel.swift */,
+				FD9536152927DA6E00124C16 /* UserService.swift */,
+			);
+			path = HW_4.3;
+			sourceTree = "<group>";
+		};
 		FDC74F17289E8C6A0009604F = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +157,7 @@
 				FDC74F23289E8C6A0009604F /* AppDelegate.swift */,
 				FDC74F25289E8C6A0009604F /* SceneDelegate.swift */,
 				FD8F446128ABBF27003041D1 /* FeedViewController.swift */,
+				FD9536122927D8C000124C16 /* HW_4.3 */,
 				FD1204B428B63169006AE0EE /* Profile */,
 				FD8F446328ABC35A003041D1 /* PostViewController.swift */,
 				FD863E4128AE666000475D1C /* InfoViewController.swift */,
@@ -285,8 +299,10 @@
 				FD37152728C752B800616C30 /* LogInViewController.swift in Sources */,
 				FD863E4228AE666000475D1C /* InfoViewController.swift in Sources */,
 				FDC74F24289E8C6A0009604F /* AppDelegate.swift in Sources */,
+				FD9536142927D8F100124C16 /* UserModel.swift in Sources */,
 				FDB41F8628EF2E390071B88D /* CustomPhotoCell.swift in Sources */,
 				FD8F446428ABC35A003041D1 /* PostViewController.swift in Sources */,
+				FD9536162927DA6E00124C16 /* UserService.swift in Sources */,
 				FD1204B828B6320C006AE0EE /* ProfileViewController.swift in Sources */,
 				FDC74F26289E8C6A0009604F /* SceneDelegate.swift in Sources */,
 				FD1204B628B6318F006AE0EE /* ProfileTableHederView.swift in Sources */,
