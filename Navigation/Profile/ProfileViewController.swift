@@ -10,11 +10,12 @@ import StorageService
 
 class ProfileViewController: UIViewController {
     
-    
+    public var user = User(login: " ", name: " ", avatar: UIImage(systemName: "person")!, status: " ")
     private var posts = StorageService.viewModel
     private var array = [photos]
+    
 
-    var startPoint: CGPoint?
+    private var startPoint: CGPoint?
 
     private lazy var tableView: UITableView = {
 
@@ -33,7 +34,7 @@ class ProfileViewController: UIViewController {
     
     lazy var avatarImageView: UIImageView = {
        let imageView = UIImageView()
-       imageView.image = UIImage(named: "cat")
+       imageView.image = user.avatar
        imageView.alpha = 0
        imageView.contentMode = .scaleAspectFill
        imageView.clipsToBounds = true
@@ -160,7 +161,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if section == 0 {
-            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HeaderView") as? ProfileHeaderView else { return nil }
+            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HeaderView") as? ProfileHeaderView
+            else { return nil }
+            header.nameLabel.text = self.user.name
+            header.avatarImageView.image = self.user.avatar
+            header.statusLabel.text = self.user.status
             let tapOnAvatarIV = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
             header.avatarImageView.addGestureRecognizer(tapOnAvatarIV)
             header.avatarImageView.isUserInteractionEnabled = true
