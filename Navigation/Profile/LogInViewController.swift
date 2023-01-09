@@ -9,6 +9,8 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    private var loginDelegate: LoginViewControllerDelegate? = LoginInspector()
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,7 +24,6 @@ class LogInViewController: UIViewController {
        return imageView
    }()
     
-
     private lazy var textFieldsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
@@ -31,8 +32,7 @@ class LogInViewController: UIViewController {
         return stackView
     }()
     
-    
-    private lazy var loginTextField: UITextField = {
+    var loginTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.backgroundColor = UIColor.systemGray6
@@ -48,7 +48,7 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
-    private lazy var passwordTextField: UITextField = {
+    lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.isSecureTextEntry = true
@@ -84,10 +84,24 @@ class LogInViewController: UIViewController {
     }()
     
     @objc private func didTapButton() {
-        let vc = ProfileViewController()
-        vc.modalPresentationStyle = .automatic
-     //   self.pushViewController(vc,animated: true)
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        let login = loginTextField.text!
+        let password = passwordTextField.text!
+        let isValid = loginDelegate?.check(log: login, pass: password) ?? false
+        
+        if isValid  {
+            let vc = ProfileViewController()
+            vc.modalPresentationStyle = .automatic
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let alertController = UIAlertController(title: "Ошибка", message: "Неверный логин или пароль", preferredStyle: .alert)
+            let closeAction = UIAlertAction(title: "Зыкрыть", style: .default) { _ in
+                self.dismiss(animated: true)
+            }
+            alertController.addAction(closeAction)
+            self.present(alertController, animated: true)
+        }
+
     }
    
     override func viewDidLoad() {

@@ -25,6 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         let feedNavController = UINavigationController(rootViewController: FeedViewController())
         let logInViewController = UINavigationController(rootViewController: LogInViewController())
+        
         let tabBarController = UITabBarController()
 
         tabBarController.viewControllers = [ feedNavController , logInViewController]
