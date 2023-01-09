@@ -84,7 +84,6 @@ class LogInViewController: UIViewController {
     }()
     
     @objc private func didTapButton() {
-        
         let login = loginTextField.text!
         let password = passwordTextField.text!
         let isValid = loginDelegate?.check(log: login, pass: password) ?? false
@@ -101,7 +100,6 @@ class LogInViewController: UIViewController {
             alertController.addAction(closeAction)
             self.present(alertController, animated: true)
         }
-
     }
    
     override func viewDidLoad() {
