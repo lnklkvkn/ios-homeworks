@@ -84,12 +84,42 @@ class LogInViewController: UIViewController {
     }()
     
     @objc private func didTapButton() {
+//        let vc = ProfileViewController()
+
+        #if DEBUG
+
+        let service = TestUserService()
+
+        #else
+
+        let service = CurrentUserService()
+
+        #endif
+        
+        
+        
+        /*
+         if service.authorization(login: loginTextField.text!) != nil {
+             vc.user = service.user
+             vc.modalPresentationStyle = .automatic
+             self.navigationController?.pushViewController(vc, animated: true)
+         } else {
+             let alertController = UIAlertController(title: "Неверный логин", message: "Данный логин не зарегистрирован в системе", preferredStyle: .alert)
+             let action = UIAlertAction(title: "Ок", style: .default) { _ in
+                 alertController.dismiss(animated: true)
+             }
+             alertController.addAction(action)
+             self.present(alertController, animated: true)
+         }
+         */
+        
         let login = loginTextField.text!
         let password = passwordTextField.text!
         let isValid = loginDelegate?.check(log: login, pass: password) ?? false
         
         if isValid  {
             let vc = ProfileViewController()
+            vc.user = service.user
             vc.modalPresentationStyle = .automatic
             self.navigationController?.pushViewController(vc, animated: true)
         } else {

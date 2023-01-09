@@ -28,7 +28,7 @@ class CurrentUserService : UserServiceProtocol {
 
 class TestUserService: UserServiceProtocol {
     
-    var user = User(login: "man", name: "Mr. Snow", avatar: (UIImage(named: "20"))! , status: "Hello World")
+    var user = User(login: "cat", name: "Mr. Snow", avatar: (UIImage(named: "20"))! , status: "Hello World")
     func authorization(login: String) -> User? {
         if login == self.user.login {
             return user
