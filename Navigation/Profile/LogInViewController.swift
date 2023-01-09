@@ -9,7 +9,9 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
-    private var loginDelegate: LoginViewControllerDelegate? = LoginInspector()
+    private let factory: LoginFactory = MyLoginFactory()
+    
+    lazy private var loginDelegate: LoginViewControllerDelegate = factory.makeLoginInspector()
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -96,26 +98,9 @@ class LogInViewController: UIViewController {
 
         #endif
         
-        
-        
-        /*
-         if service.authorization(login: loginTextField.text!) != nil {
-             vc.user = service.user
-             vc.modalPresentationStyle = .automatic
-             self.navigationController?.pushViewController(vc, animated: true)
-         } else {
-             let alertController = UIAlertController(title: "Неверный логин", message: "Данный логин не зарегистрирован в системе", preferredStyle: .alert)
-             let action = UIAlertAction(title: "Ок", style: .default) { _ in
-                 alertController.dismiss(animated: true)
-             }
-             alertController.addAction(action)
-             self.present(alertController, animated: true)
-         }
-         */
-        
         let login = loginTextField.text!
         let password = passwordTextField.text!
-        let isValid = loginDelegate?.check(log: login, pass: password) ?? false
+        let isValid = loginDelegate.check(log: login, pass: password)
         
         if isValid  {
             let vc = ProfileViewController()
