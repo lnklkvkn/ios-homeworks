@@ -9,6 +9,10 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    private let factory: LoginFactory = MyLoginFactory()
+    
+    lazy private var loginDelegate: LoginViewControllerDelegate = factory.makeLoginInspector()
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,7 +26,6 @@ class LogInViewController: UIViewController {
        return imageView
    }()
     
-
     private lazy var textFieldsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
@@ -31,8 +34,7 @@ class LogInViewController: UIViewController {
         return stackView
     }()
     
-    
-    private lazy var loginTextField: UITextField = {
+    var loginTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.backgroundColor = UIColor.systemGray6
@@ -48,7 +50,7 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
-    private lazy var passwordTextField: UITextField = {
+    lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.isSecureTextEntry = true
@@ -84,29 +86,33 @@ class LogInViewController: UIViewController {
     }()
     
     @objc private func didTapButton() {
-        
-        let vc = ProfileViewController()
-        
+//        let vc = ProfileViewController()
+
         #if DEBUG
-        
+
         let service = TestUserService()
-        
+
         #else
-        
+
         let service = CurrentUserService()
-        
+
         #endif
         
-        if service.authorization(login: loginTextField.text!) != nil {
+        let login = loginTextField.text!
+        let password = passwordTextField.text!
+        let isValid = loginDelegate.check(log: login, pass: password)
+        
+        if isValid  {
+            let vc = ProfileViewController()
             vc.user = service.user
             vc.modalPresentationStyle = .automatic
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
-            let alertController = UIAlertController(title: "Неверный логин", message: "Данный логин не зарегистрирован в системе", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Ок", style: .default) { _ in
-                alertController.dismiss(animated: true)
+            let alertController = UIAlertController(title: "Ошибка", message: "Неверный логин или пароль", preferredStyle: .alert)
+            let closeAction = UIAlertAction(title: "Зыкрыть", style: .default) { _ in
+                self.dismiss(animated: true)
             }
-            alertController.addAction(action)
+            alertController.addAction(closeAction)
             self.present(alertController, animated: true)
         }
     }
