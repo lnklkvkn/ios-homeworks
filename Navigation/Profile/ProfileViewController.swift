@@ -7,6 +7,7 @@
 
 import UIKit
 import StorageService
+import iOSIntPackage
 
 class ProfileViewController: UIViewController {
     
@@ -193,13 +194,14 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         if indexPath.section == 1 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? PostTableViewCell {
                 cell.autorLabel.text = posts[indexPath.row].author
-                cell.postImageView.image = UIImage(named: posts[indexPath.row].image)
+                 // cell.postImageView.image = UIImage(named: posts[indexPath.row].image)
+                ImageProcessor().processImage(sourceImage: (UIImage(named: posts[indexPath.row].image))!, filter: .noir, completion: {(image:UIImage?) -> Void in cell.postImageView.image = image} )
                 cell.descriptionLabel.text = posts[indexPath.row].description
                 cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
                 cell.viewsLabel.text = "Views: \(posts[indexPath.row].views)"
                 return cell
-                
             }
+            
         } else if indexPath.section == 0 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "PhotosCell",for: indexPath) as? PhotosTableViewCell {
                     cell.photosLabel.text = array[indexPath.row].title
