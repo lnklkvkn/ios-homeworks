@@ -7,8 +7,12 @@
 
 import UIKit
 
+import iOSIntPackage
+
 class PhotosViewController: UIViewController {
 
+    private var imagePublisherFacade = ImagePublisherFacade()
+    var images = photosCollectionAsUIImages
     
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -29,14 +33,21 @@ class PhotosViewController: UIViewController {
         return collectionView
     }()
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigationBar()
         self.setupView()
+        
+        imagePublisherFacade.subscribe(self)
+        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 20, userImages: images)
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
+        imagePublisherFacade.removeSubscription(for: self)
+
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -66,9 +77,9 @@ class PhotosViewController: UIViewController {
 }
     
 extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+        
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photosCollection.count
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -79,7 +90,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         }
 
         cell.clipsToBounds = true
-        cell.setup(with: photosCollection[indexPath.row])
+        cell.setup(with: images[indexPath.row])
         return cell
     }
     
@@ -94,5 +105,13 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         return CGSize(width: itemWidth, height: itemWidth)
     }
 }
+    
+extension PhotosViewController : ImageLibrarySubscriber {
+    func receive(images: [UIImage]) {
+        self.images = images
+        collectionView.reloadData()
+    }
+}
+    
     
 
