@@ -48,26 +48,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-//    private lazy var setStatusButton: UIButton = {
-//        let button = UIButton()
-//        button.backgroundColor = .systemBlue
-//        button.setTitle("Show status", for: .normal)
-//        button.setTitleColor(UIColor.white, for: .normal)
-//        button.layer.cornerRadius = 4
-//        button.layer.shadowColor = UIColor.black.cgColor
-//        button.layer.shadowOffset = CGSize(width: 4, height: 4)
-//        button.layer.shadowRadius = 4
-//        button.layer.shadowOpacity = 0.7
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//
-//        button.addTarget(self, action: #selector(self.didTapButton), for: .touchUpInside)
-//
-//        return button
-//    }()
-    
+
     private lazy var setStatusButton = CustomButton(title: "Show status", completion: {self.statusLabel.text = self.statusText} )
-    
     
     private lazy var statusLabelTextField : UITextField = {
         let textField = UITextField()

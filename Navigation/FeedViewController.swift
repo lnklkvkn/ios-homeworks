@@ -10,10 +10,9 @@ import UIKit
 class FeedViewController: UIViewController {
     
     private var checkText: String = ""
+    
     let feedModel = FeedModel()
-    
-    
-    
+
     private lazy var checkTextField : UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .white
@@ -24,23 +23,19 @@ class FeedViewController: UIViewController {
         textField.textColor = .black
         textField.placeholder = "  Введите слово..."
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(self.checkTextChanged), for: .editingChanged)
         textField.translatesAutoresizingMaskIntoConstraints = false
 
         return textField
     }()
     
-    @objc private func checkTextChanged(_ textField: UITextField) {
+    private lazy var checkGuessButton = CustomButton(title: "Проверить слово", completion: { [self] in if self.checkTextField.text != nil {
+        feedModel.check(word: self.checkTextField.text!)
         if feedModel.isTrue {
             indicatorButton.backgroundColor = .green
         } else {
             indicatorButton.backgroundColor = .red
         }
     }
-    
-   
-    private lazy var checkGuessButton = CustomButton(title: "Проверить слово", completion: { [self] in if self.checkTextField.text != nil {
-        self.feedModel.check(word: self.checkTextField.text!)}
     })
     
     private lazy var indicatorButton: UILabel = {
@@ -58,11 +53,13 @@ class FeedViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
+    
     private lazy var firstButton = CustomButton(title: "Показать пост",
                                                  completion: {
         let vc = PostViewController()
         self.navigationController?.pushViewController(vc, animated: true)}
     )
+    
     private lazy var secondButton = CustomButton(title: "Показать пост",
                                                  completion: {
         let vc = PostViewController()
@@ -84,30 +81,32 @@ class FeedViewController: UIViewController {
         
         stackView.center = view.center
         self.view.addSubview(self.stackView)
+        self.view.addSubview(self.checkTextField)
+        self.view.addSubview(self.checkGuessButton)
+        self.view.addSubview(self.indicatorButton)
         
         self.stackView.addArrangedSubview(self.firstButton)
         self.stackView.addArrangedSubview(self.secondButton)
         
         NSLayoutConstraint.activate([
             
-            checkTextField.topAnchor.constraint(equalTo: self.view.topAnchor),
-            checkTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            checkTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            checkTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             checkTextField.heightAnchor.constraint(equalToConstant: 40),
             checkTextField.widthAnchor.constraint(equalToConstant: 100),
 
-            checkGuessButton.topAnchor.constraint(equalTo: view.topAnchor),
+            checkGuessButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             checkGuessButton.leadingAnchor.constraint(equalTo: checkTextField.trailingAnchor, constant: 20),
-            checkGuessButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            checkGuessButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             checkGuessButton.heightAnchor.constraint(equalToConstant: 40),
             
             indicatorButton.topAnchor.constraint(equalTo: checkGuessButton.bottomAnchor, constant: 10),
-            indicatorButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            indicatorButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             indicatorButton.heightAnchor.constraint(equalToConstant: 30),
             indicatorButton.widthAnchor.constraint(equalToConstant: 100)
             ])
         
         NSLayoutConstraint.activate(stackViewContraints())
-        
         
     }
 }

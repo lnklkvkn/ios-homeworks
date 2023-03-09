@@ -29,10 +29,6 @@ class CustomButton: UIButton {
         addTarget(self, action: #selector(self.didTapButton), for: .touchUpInside)
 
     }
-
-//    internal init(completion: @escaping () -> Void) {
-//        self.completion = completion
-//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -42,22 +38,3 @@ class CustomButton: UIButton {
         completion()
     }
 }
-
-
-
-//let button = UIButton()
-//button.backgroundColor = .systemBlue
-//button.setTitle("Show status", for: .normal)
-//button.setTitleColor(UIColor.white, for: .normal)
-//button.layer.cornerRadius = 4
-//button.layer.shadowColor = UIColor.black.cgColor
-//button.layer.shadowOffset = CGSize(width: 4, height: 4)
-//button.layer.shadowRadius = 4
-//button.layer.shadowOpacity = 0.7
-//button.translatesAutoresizingMaskIntoConstraints = false
-//
-//button.addTarget(self, action: #selector(self.didTapButton), for: .touchUpInside)
-
-//@objc private func didTapButton() {
-//    statusLabel.text = statusText
-//}

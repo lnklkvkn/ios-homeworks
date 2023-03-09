@@ -15,6 +15,8 @@ class FeedModel {
     func check(word: String) {
         if word == secretWord {
             isTrue = true
+        } else {
+            isTrue = false
         }
     }
 }
