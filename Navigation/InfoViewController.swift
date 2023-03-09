@@ -15,8 +15,7 @@ class InfoViewController: UIViewController {
         self.view.addSubview(self.button)
         self.button.center = self.view.center
     }
-    
-    
+
     private lazy var button: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
         button.backgroundColor = .systemBlue
