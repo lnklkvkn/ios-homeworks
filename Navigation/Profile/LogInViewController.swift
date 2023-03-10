@@ -86,7 +86,6 @@ class LogInViewController: UIViewController {
     }()
     
     @objc private func didTapButton() {
-//        let vc = ProfileViewController()
 
         #if DEBUG
 
