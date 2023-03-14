@@ -11,9 +11,11 @@ import iOSIntPackage
 
 class PhotosViewController: UIViewController {
 
-    private var imagePublisherFacade = ImagePublisherFacade()
-    var images = photosCollectionAsUIImages
-    
+    var photosCollection = photosCollect.map {UIImage(named: $0)!}
+    var photosCollectionFiltring : [UIImage] = []
+
+    var imageProcessor = ImageProcessor()
+
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -32,22 +34,48 @@ class PhotosViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigationBar()
         self.setupView()
         
-        imagePublisherFacade.subscribe(self)
-        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 20, userImages: images)
-
+        let group = DispatchGroup()
+        group.enter()
+        let filtringStart = CFAbsoluteTimeGetCurrent()
+        imageProcessor.processImagesOnThread(
+            sourceImages: photosCollection,
+            filter: .colorInvert,
+            qos: .utility) { [self] completion in
+                for peoplePhoto in completion {
+                    if let photo = peoplePhoto {
+                        photosCollectionFiltring.append(UIImage(cgImage: photo))
+                    }
+                }
+                
+                let filtringTime = CFAbsoluteTimeGetCurrent() - filtringStart
+                print("Фильтрация продолжалась \(filtringTime) секунд")
+                group.leave()
+            }
+            
+        group.notify(queue: .main) { [self] in
+            photosCollection = photosCollectionFiltring
+            collectionView.reloadData()
+        }
+        
+        /* Результаты задания №8 :
+         
+         .default - 4.4 sec
+         .background - 17.2 sec
+         .userInitiated - 3.8 sec
+         .userInteractive - 3.9 sec
+         .utility - 3.8 sec
+         
+         */
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
-        imagePublisherFacade.removeSubscription(for: self)
-
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -79,9 +107,10 @@ class PhotosViewController: UIViewController {
 extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return photosCollection.count
     }
     
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? CustomPhotoCell else {
@@ -90,10 +119,11 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         }
 
         cell.clipsToBounds = true
-        cell.setup(with: images[indexPath.row])
+        cell.setup(with: photosCollection[indexPath.row])
+        
         return cell
     }
-    
+        
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let insets = (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset ?? .zero
@@ -106,12 +136,6 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
     }
 }
     
-extension PhotosViewController : ImageLibrarySubscriber {
-    func receive(images: [UIImage]) {
-        self.images = images
-        collectionView.reloadData()
-    }
-}
     
     
 
