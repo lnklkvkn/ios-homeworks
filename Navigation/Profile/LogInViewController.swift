@@ -174,7 +174,7 @@ class LogInViewController: UIViewController {
         self.scrollView.addSubview(self.logInButton)
         self.scrollView.addSubview(self.logoImageView)
         self.scrollView.addSubview(self.tuckUpButton)
-        self.scrollView.addSubview(self.activityIndicator)
+        self.passwordTextField.addSubview(activityIndicator)
         self.textFieldsStackView.addArrangedSubview(self.loginTextField)
         self.textFieldsStackView.addArrangedSubview(self.passwordTextField)
    
@@ -204,10 +204,8 @@ class LogInViewController: UIViewController {
             self.tuckUpButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             self.tuckUpButton.heightAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.heightAnchor, multiplier: 0.06112469),
             
-            self.activityIndicator.topAnchor.constraint(equalTo: self.logoImageView.bottomAnchor,constant: 16),
-            self.activityIndicator.heightAnchor.constraint(equalTo: self.logoImageView.heightAnchor, multiplier: 0.5),
-            self.activityIndicator.widthAnchor.constraint(equalTo: self.logoImageView.widthAnchor, multiplier: 0.5),
-            self.activityIndicator.centerXAnchor.constraint(equalTo: self.logoImageView.centerXAnchor)
+            self.activityIndicator.trailingAnchor.constraint(equalTo: self.passwordTextField.trailingAnchor, constant: -5),
+            self.activityIndicator.heightAnchor.constraint(equalTo: self.passwordTextField.heightAnchor)
             ])
     }
 
