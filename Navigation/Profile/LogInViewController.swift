@@ -9,6 +9,8 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    
+    var password: String = ""
     private let factory: LoginFactory = MyLoginFactory()
     
     lazy private var loginDelegate: LoginViewControllerDelegate = factory.makeLoginInspector()
@@ -77,15 +79,34 @@ class LogInViewController: UIViewController {
         button.setTitle("Log in", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 10
-
         button.translatesAutoresizingMaskIntoConstraints = false
 
-        button.addTarget(self, action: #selector(self.didTapButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.didTapLogInButton), for: .touchUpInside)
 
         return button
     }()
     
-    @objc private func didTapButton() {
+    private lazy var tuckUpButton: UIButton = {
+        let button = UIButton()
+    
+        button.setTitle("Подобрать пароль", for: .normal)
+        button.setTitleColor(UIColor.gray, for: .normal)
+        button.layer.cornerRadius = 10
+        button.layer.borderColor = UIColor.lightGray.cgColor
+        button.layer.borderWidth = 0.5
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(self.didTapTuckUpButton), for: .touchUpInside)
+
+        return button
+    }()
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
+    @objc private func didTapLogInButton() {
 
         #if DEBUG
 
@@ -116,12 +137,33 @@ class LogInViewController: UIViewController {
         }
     }
    
+    @objc private func didTapTuckUpButton() {
+        
+        let queue = DispatchQueue.global()
+        let group = DispatchGroup()
+        
+        group.enter()
+        self.activityIndicator.startAnimating()
+        queue.async {
+            self.bruteForce(passwordToUnlock: self.randomPassword(passwordLength: 4))
+            group.leave()
+        }
+        group.notify(queue: .main) { [self] in
+            self.passwordTextField.isSecureTextEntry = false
+            self.passwordTextField.text = self.password
+            self.activityIndicator.stopAnimating()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
         self.setupGesture()
+        
         self.navigationController?.navigationBar.isHidden = true
+  
     }
+    
     
     private func setupView() {
         
@@ -131,6 +173,8 @@ class LogInViewController: UIViewController {
         self.scrollView.addSubview(self.textFieldsStackView)
         self.scrollView.addSubview(self.logInButton)
         self.scrollView.addSubview(self.logoImageView)
+        self.scrollView.addSubview(self.tuckUpButton)
+        self.scrollView.addSubview(self.activityIndicator)
         self.textFieldsStackView.addArrangedSubview(self.loginTextField)
         self.textFieldsStackView.addArrangedSubview(self.passwordTextField)
    
@@ -154,6 +198,16 @@ class LogInViewController: UIViewController {
             self.logInButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             self.logInButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             self.logInButton.heightAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.heightAnchor, multiplier: 0.06112469),
+            
+            self.tuckUpButton.topAnchor.constraint(equalTo: self.logInButton.bottomAnchor, constant: 16),
+            self.tuckUpButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            self.tuckUpButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            self.tuckUpButton.heightAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.heightAnchor, multiplier: 0.06112469),
+            
+            self.activityIndicator.topAnchor.constraint(equalTo: self.logoImageView.bottomAnchor,constant: 16),
+            self.activityIndicator.heightAnchor.constraint(equalTo: self.logoImageView.heightAnchor, multiplier: 0.5),
+            self.activityIndicator.widthAnchor.constraint(equalTo: self.logoImageView.widthAnchor, multiplier: 0.5),
+            self.activityIndicator.centerXAnchor.constraint(equalTo: self.logoImageView.centerXAnchor)
             ])
     }
 
@@ -187,11 +241,11 @@ class LogInViewController: UIViewController {
               let keyboardRectangle = keyboardFrame.cgRectValue
               let keyboardHeight = keyboardRectangle.height
 
-            let loginButtonBottomPointY = self.logInButton.frame.origin.y + self.logInButton.frame.height
+            let tuckUpButtonBottomPointY = self.tuckUpButton.frame.origin.y + self.tuckUpButton.frame.height
             let keyboardOriginY =  self.view.frame.height - keyboardHeight
 
-            let offset = keyboardOriginY <= loginButtonBottomPointY
-            ? loginButtonBottomPointY - keyboardOriginY + 16
+            let offset = keyboardOriginY <= tuckUpButtonBottomPointY
+            ? tuckUpButtonBottomPointY - keyboardOriginY + 16
             : 0
 
             self.scrollView.contentOffset = CGPoint(x: 0, y: offset)
@@ -202,13 +256,71 @@ class LogInViewController: UIViewController {
         self.hideKeyboard()
     }
     
-    
     @objc private func hideKeyboard() {
         self.view.endEditing(true)
         self.scrollView.setContentOffset(.zero, animated: true)
     }
 
-
-    
 }
 
+extension String {
+    var digits:      String { return "0123456789" }
+    var lowercase:   String { return "abcdefghijklmnopqrstuvwxyz" }
+    var uppercase:   String { return "ABCDEFGHIJKLMNOPQRSTUVWXYZ" }
+    var punctuation: String { return "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~" }
+    var letters:     String { return lowercase + uppercase }
+    var printable:   String { return digits + letters + punctuation }
+
+
+
+    mutating func replace(at index: Int, with character: Character) {
+        var stringArray = Array(self)
+        stringArray[index] = character
+        self = String(stringArray)
+    }
+}
+
+extension LogInViewController {
+    
+    func bruteForce(passwordToUnlock: String) {
+        let ALLOWED_CHARACTERS: [String] = String().printable.map { String($0) }
+
+        while password != passwordToUnlock {
+            password = generateBruteForce(password, fromArray: ALLOWED_CHARACTERS)
+        }
+        
+        print(password)
+    }
+    
+    func indexOf(character: Character, _ array: [String]) -> Int {
+        return array.firstIndex(of: String(character))!
+    }
+
+    func characterAt(index: Int, _ array: [String]) -> Character {
+        return index < array.count ? Character(array[index])
+                                   : Character("")
+    }
+
+    func generateBruteForce(_ string: String, fromArray array: [String]) -> String {
+        var str: String = string
+
+        if str.count <= 0 {
+            str.append(characterAt(index: 0, array))
+        }
+        else {
+            str.replace(at: str.count - 1,
+                        with: characterAt(index: (indexOf(character: str.last!, array) + 1) % array.count, array))
+
+            if indexOf(character: str.last!, array) == 0 {
+                str = String(generateBruteForce(String(str.dropLast()), fromArray: array)) + String(str.last!)
+            }
+        }
+
+        return str
+    }
+    
+    func randomPassword(passwordLength: Int) -> String {
+        let signs = String().printable
+        return String((0..<passwordLength).map{ _ in signs.randomElement()! })
+    }
+}
