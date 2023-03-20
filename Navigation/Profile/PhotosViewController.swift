@@ -46,7 +46,7 @@ class PhotosViewController: UIViewController {
         imageProcessor.processImagesOnThread(
             sourceImages: photosCollection,
             filter: .colorInvert,
-            qos: .utility) { [self] completion in
+            qos: .userInteractive) { [self] completion in
                 for peoplePhoto in completion {
                     if let photo = peoplePhoto {
                         photosCollectionFiltring.append(UIImage(cgImage: photo))
@@ -72,6 +72,7 @@ class PhotosViewController: UIViewController {
          .utility - 3.8 sec
          
          */
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
