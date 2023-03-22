@@ -8,8 +8,9 @@
 import UIKit
 
 class FeedModel {
-    
-    let secretWord = "cat"
+
+    var secretWord = "cat"
+    let secretWords = ["snake", "tiger", "dog", "pig", "cow"]
     var isTrue = false
     
     func check(word: String) {
