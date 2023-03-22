@@ -24,9 +24,22 @@ class CustomPhotoCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup(with image: UIImage) {
-        self.photo.image = image
+    enum PhotosError: Error {
+        case noPhoto
     }
+    
+    func setup(with image: UIImage?) -> Result<UIImage, Error> {
+        if image != nil {
+            self.photo.image = image
+            return.success(image!)
+        } else {
+            return .failure(PhotosError.noPhoto)
+        }
+    }
+    
+//    func setup(with image: UIImage) {
+//        self.photo.image = image
+//    }
 
     private func setupView() {
         self.addSubview(self.photo)

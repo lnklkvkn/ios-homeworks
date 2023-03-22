@@ -107,28 +107,43 @@ class LogInViewController: UIViewController {
     }()
     
     @objc private func didTapLogInButton() {
-
-        #if DEBUG
-
+        
+#if DEBUG
+        
         let service = TestUserService()
-
-        #else
-
+        
+#else
+        
         let service = CurrentUserService()
-
-        #endif
+        
+#endif
         
         let login = loginTextField.text!
         let password = passwordTextField.text!
-        let isValid = loginDelegate.check(log: login, pass: password)
         
-        if isValid  {
-            let vc = ProfileViewController()
-            vc.user = service.user
-            vc.modalPresentationStyle = .automatic
-            self.navigationController?.pushViewController(vc, animated: true)
-        } else {
-            let alertController = UIAlertController(title: "Ошибка", message: "Неверный логин или пароль", preferredStyle: .alert)
+        do {
+            if try loginDelegate.check(log: login, pass: password) {
+                let vc = ProfileViewController()
+                vc.user = service.user
+                vc.modalPresentationStyle = .automatic
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        } catch LoginError.incorrectPassword {
+            let alertController = UIAlertController(title: "Ошибка", message: "Неверный пароль", preferredStyle: .alert)
+            let closeAction = UIAlertAction(title: "Зыкрыть", style: .default) { _ in
+                self.dismiss(animated: true)
+            }
+            alertController.addAction(closeAction)
+            self.present(alertController, animated: true)
+        } catch LoginError.userIsNotFound {
+            let alertController = UIAlertController(title: "Ошибка", message: "Пользователь с таким логином не существует", preferredStyle: .alert)
+            let closeAction = UIAlertAction(title: "Зыкрыть", style: .default) { _ in
+                self.dismiss(animated: true)
+            }
+            alertController.addAction(closeAction)
+            self.present(alertController, animated: true)
+        } catch {
+            let alertController = UIAlertController(title: "Ошибка", message: "Неизвестная ошибка", preferredStyle: .alert)
             let closeAction = UIAlertAction(title: "Зыкрыть", style: .default) { _ in
                 self.dismiss(animated: true)
             }
@@ -136,7 +151,8 @@ class LogInViewController: UIViewController {
             self.present(alertController, animated: true)
         }
     }
-   
+        
+
     @objc private func didTapTuckUpButton() {
         
         let queue = DispatchQueue.global()
@@ -144,10 +160,12 @@ class LogInViewController: UIViewController {
         
         group.enter()
         self.activityIndicator.startAnimating()
+        
         queue.async {
             self.bruteForce(passwordToUnlock: self.randomPassword(passwordLength: 4))
             group.leave()
         }
+        
         group.notify(queue: .main) { [self] in
             self.passwordTextField.isSecureTextEntry = false
             self.passwordTextField.text = self.password
@@ -163,7 +181,6 @@ class LogInViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
   
     }
-    
     
     private func setupView() {
         

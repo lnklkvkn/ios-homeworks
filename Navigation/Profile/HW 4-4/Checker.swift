@@ -7,6 +7,12 @@
 
 import UIKit
 
+
+enum LoginError: Error {
+    case incorrectPassword
+    case userIsNotFound
+}
+
 final class Checker {
     
     static let shared = Checker()
@@ -16,13 +22,21 @@ final class Checker {
     private let login = "cat"
     private let password = "cat"
     
-    func check(_ log: String, _ pass: String) -> Bool {
 
-        log == self.login && pass == self.password
+    
+    func check(_ log: String, _ pass: String) throws -> Bool {
+        
+        if log == self.login && pass == self.password {
+            return true
+        } else if log == self.login && pass != self.password {
+            throw LoginError.incorrectPassword
+        } else {
+            throw LoginError.userIsNotFound
+        }
     }
 }
 
 protocol LoginViewControllerDelegate {
     
-    func check(log: String, pass: String) -> Bool
+    func check(log: String, pass: String) throws -> Bool
 }
