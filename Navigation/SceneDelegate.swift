@@ -8,15 +8,33 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        if #available(iOS 15, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        }
+        
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        self.window = UIWindow(windowScene: windowScene)
+        let feedNavController = UINavigationController(rootViewController: FeedViewController())
+        let logInViewController = UINavigationController(rootViewController: LogInViewController())
+        let tabBarController = UITabBarController()
+       
+        tabBarController.viewControllers = [ feedNavController , logInViewController]
+        tabBarController.viewControllers?.enumerated().forEach {
+            $1.tabBarItem.title = $0 == 0 ? "Feed" : "Profile"
+            $1.tabBarItem.image = $0 == 0 ? UIImage(systemName: "house.fill") : UIImage(systemName: "person.fill")
+        }
+        self.window?.rootViewController = tabBarController
+        self.window?.makeKeyAndVisible()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

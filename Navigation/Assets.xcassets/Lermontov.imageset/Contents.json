@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "1530254454_sohranennoe-izobrazhenie-2018-6-29_13-40-44.147.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
