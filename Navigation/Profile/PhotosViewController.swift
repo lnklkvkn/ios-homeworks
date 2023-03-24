@@ -120,7 +120,9 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         }
 
         cell.clipsToBounds = true
-        cell.setup(with: photosCollection[indexPath.row])
+        
+        let photos = cell.setup(with: photosCollection[indexPath.row])
+        print(photos)
         
         return cell
     }
