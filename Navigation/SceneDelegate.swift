@@ -13,7 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        NetworkService.request(for: a)
+        NetworkService.request(for: AppConfiguration.people)
         
         if #available(iOS 15, *) {
             let appearance = UINavigationBarAppearance()

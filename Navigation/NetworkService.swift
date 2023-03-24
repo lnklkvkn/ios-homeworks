@@ -14,12 +14,12 @@ struct NetworkService {
         let myUrl: URL
         
         switch configuration {
-        case .one (let url):
-            myUrl = url
-        case .two (let url):
-            myUrl = url
-        case .three(let url):
-            myUrl = url
+        case .people :
+            myUrl = AppConfiguration.people.url!
+        case .starships:
+            myUrl = AppConfiguration.starships.url!
+        case .planets:
+            myUrl = AppConfiguration.planets.url!
         }
         
         let request = URLRequest(url: myUrl)
@@ -48,14 +48,15 @@ struct NetworkService {
 }
 
 
-enum AppConfiguration {
+enum AppConfiguration: String {
     
-    case one(url: URL)
-    case two(url: URL)
-    case three(url: URL)
+    case people = "https://swapi.dev/api/people/8"
+    case starships = "https://swapi.dev/api/starships/3"
+    case planets = "https://swapi.dev/api/planets/5"
+    
+    var url: URL? {
+        URL(string: self.rawValue)
+    }
 }
 
-let a = AppConfiguration.one(url: URL(string: "https://swapi.dev/api/people/8")!)
-let b = AppConfiguration.two(url: URL(string:"https://swapi.dev/api/starships/3")!)
-let c = AppConfiguration.three(url: URL(string:"https://swapi.dev/api/planets/5")!)
 
