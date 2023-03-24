@@ -129,28 +129,23 @@ class LogInViewController: UIViewController {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         } catch LoginError.incorrectPassword {
-            let alertController = UIAlertController(title: "Ошибка", message: "Неверный пароль", preferredStyle: .alert)
-            let closeAction = UIAlertAction(title: "Зыкрыть", style: .default) { _ in
-                self.dismiss(animated: true)
-            }
-            alertController.addAction(closeAction)
-            self.present(alertController, animated: true)
+            handleError(message: "Неверный пароль")
         } catch LoginError.userIsNotFound {
-            let alertController = UIAlertController(title: "Ошибка", message: "Пользователь с таким логином не существует", preferredStyle: .alert)
-            let closeAction = UIAlertAction(title: "Зыкрыть", style: .default) { _ in
-                self.dismiss(animated: true)
-            }
-            alertController.addAction(closeAction)
-            self.present(alertController, animated: true)
+            handleError(message: "Пользователь с таким логином не существует")
         } catch {
-            let alertController = UIAlertController(title: "Ошибка", message: "Неизвестная ошибка", preferredStyle: .alert)
-            let closeAction = UIAlertAction(title: "Зыкрыть", style: .default) { _ in
-                self.dismiss(animated: true)
-            }
-            alertController.addAction(closeAction)
-            self.present(alertController, animated: true)
+            handleError(message: "Неизвестная ошибка")
         }
     }
+    
+    private func handleError(message: String) {
+        let alertController = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        let closeAction = UIAlertAction(title: "Зыкрыть", style: .default) { _ in
+            self.dismiss(animated: true)
+        }
+        alertController.addAction(closeAction)
+        self.present(alertController, animated: true)
+    }
+        
         
 
     @objc private func didTapTuckUpButton() {

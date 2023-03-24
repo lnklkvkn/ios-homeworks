@@ -11,11 +11,12 @@
 		FD1204B828B6320C006AE0EE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1204B728B6320C006AE0EE /* ProfileViewController.swift */; };
 		FD16BA5828ECC2E90086D211 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD16BA5728ECC2E90086D211 /* PhotosViewController.swift */; };
 		FD37152728C752B800616C30 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD37152628C752B800616C30 /* LogInViewController.swift */; };
+		FD38223D29CDA035004F8026 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD75979F291842F9003C6EE8 /* Post.swift */; };
+		FD38223F29CDA100004F8026 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD38223E29CDA100004F8026 /* NetworkService.swift */; };
 		FD75978529184208003C6EE8 /* StorageService.docc in Sources */ = {isa = PBXBuildFile; fileRef = FD75978429184208003C6EE8 /* StorageService.docc */; };
 		FD75979329184208003C6EE8 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = FD75978329184208003C6EE8 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FD75979629184208003C6EE8 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD75978129184207003C6EE8 /* StorageService.framework */; };
 		FD75979729184208003C6EE8 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FD75978129184207003C6EE8 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FD7597A0291842F9003C6EE8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD75979F291842F9003C6EE8 /* Post.swift */; };
 		FD863E4228AE666000475D1C /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD863E4128AE666000475D1C /* InfoViewController.swift */; };
 		FD8F446228ABBF27003041D1 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8F446128ABBF27003041D1 /* FeedViewController.swift */; };
 		FD8F446428ABC35A003041D1 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8F446328ABC35A003041D1 /* PostViewController.swift */; };
@@ -66,6 +67,7 @@
 		FD1204B728B6320C006AE0EE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		FD16BA5728ECC2E90086D211 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		FD37152628C752B800616C30 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		FD38223E29CDA100004F8026 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		FD75978129184207003C6EE8 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD75978329184208003C6EE8 /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		FD75978429184208003C6EE8 /* StorageService.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = StorageService.docc; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			children = (
 				FD1204B528B6318F006AE0EE /* ProfileTableHederView.swift */,
 				FD37152628C752B800616C30 /* LogInViewController.swift */,
+				FD9536122927D8C000124C16 /* HW_4.3 */,
 				FDC9C537294B3CEF0076358D /* HW 4-4 */,
 				FD1204B728B6320C006AE0EE /* ProfileViewController.swift */,
 				FD16BA5728ECC2E90086D211 /* PhotosViewController.swift */,
@@ -130,8 +133,8 @@
 		FD75978229184207003C6EE8 /* StorageService */ = {
 			isa = PBXGroup;
 			children = (
-				FD75978329184208003C6EE8 /* StorageService.h */,
 				FD75979F291842F9003C6EE8 /* Post.swift */,
+				FD75978329184208003C6EE8 /* StorageService.h */,
 				FD75978429184208003C6EE8 /* StorageService.docc */,
 			);
 			path = StorageService;
@@ -169,14 +172,14 @@
 			children = (
 				FDC74F23289E8C6A0009604F /* AppDelegate.swift */,
 				FDC74F25289E8C6A0009604F /* SceneDelegate.swift */,
+				FD38223E29CDA100004F8026 /* NetworkService.swift */,
 				FD8F446128ABBF27003041D1 /* FeedViewController.swift */,
 				FDCD4A3C29B9DF9E00D9F54A /* FeedModel.swift */,
-				FD9536122927D8C000124C16 /* HW_4.3 */,
-				FD1204B428B63169006AE0EE /* Profile */,
 				FD8F446328ABC35A003041D1 /* PostViewController.swift */,
 				FD863E4128AE666000475D1C /* InfoViewController.swift */,
 				FDC74F27289E8C6A0009604F /* ViewController.swift */,
 				FDADB30029B931860051EAA8 /* CustomButton.swift */,
+				FD1204B428B63169006AE0EE /* Profile */,
 				FDC74F2C289E8C730009604F /* Assets.xcassets */,
 				FDC74F2E289E8C730009604F /* LaunchScreen.storyboard */,
 				FDC74F31289E8C730009604F /* Info.plist */,
@@ -314,7 +317,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD75978529184208003C6EE8 /* StorageService.docc in Sources */,
-				FD7597A0291842F9003C6EE8 /* Post.swift in Sources */,
+				FD38223D29CDA035004F8026 /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +338,7 @@
 				FDA7B59C296C6E4F001774E4 /* LoginFactory.swift in Sources */,
 				FDC74F24289E8C6A0009604F /* AppDelegate.swift in Sources */,
 				FD9536142927D8F100124C16 /* UserModel.swift in Sources */,
+				FD38223F29CDA100004F8026 /* NetworkService.swift in Sources */,
 				FDB41F8628EF2E390071B88D /* CustomPhotoCell.swift in Sources */,
 				FD8F446428ABC35A003041D1 /* PostViewController.swift in Sources */,
 				FD9536162927DA6E00124C16 /* UserService.swift in Sources */,
