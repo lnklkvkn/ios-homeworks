@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD113AAF29D370B300FF4F0F /* ModelsForInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD113AAE29D370B300FF4F0F /* ModelsForInfoViewController.swift */; };
 		FD1204B628B6318F006AE0EE /* ProfileTableHederView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1204B528B6318F006AE0EE /* ProfileTableHederView.swift */; };
 		FD1204B828B6320C006AE0EE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1204B728B6320C006AE0EE /* ProfileViewController.swift */; };
 		FD16BA5828ECC2E90086D211 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD16BA5728ECC2E90086D211 /* PhotosViewController.swift */; };
@@ -63,6 +64,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FD113AAE29D370B300FF4F0F /* ModelsForInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsForInfoViewController.swift; sourceTree = "<group>"; };
 		FD1204B528B6318F006AE0EE /* ProfileTableHederView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHederView.swift; sourceTree = "<group>"; };
 		FD1204B728B6320C006AE0EE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		FD16BA5728ECC2E90086D211 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				FDCD4A3C29B9DF9E00D9F54A /* FeedModel.swift */,
 				FD8F446328ABC35A003041D1 /* PostViewController.swift */,
 				FD863E4128AE666000475D1C /* InfoViewController.swift */,
+				FD113AAE29D370B300FF4F0F /* ModelsForInfoViewController.swift */,
 				FDC74F27289E8C6A0009604F /* ViewController.swift */,
 				FDADB30029B931860051EAA8 /* CustomButton.swift */,
 				FD1204B428B63169006AE0EE /* Profile */,
@@ -333,6 +336,7 @@
 				FDC74F28289E8C6A0009604F /* ViewController.swift in Sources */,
 				FDC9C536294B26760076358D /* Checker.swift in Sources */,
 				FDCD4A3D29B9DF9E00D9F54A /* FeedModel.swift in Sources */,
+				FD113AAF29D370B300FF4F0F /* ModelsForInfoViewController.swift in Sources */,
 				FD37152728C752B800616C30 /* LogInViewController.swift in Sources */,
 				FD863E4228AE666000475D1C /* InfoViewController.swift in Sources */,
 				FDA7B59C296C6E4F001774E4 /* LoginFactory.swift in Sources */,
