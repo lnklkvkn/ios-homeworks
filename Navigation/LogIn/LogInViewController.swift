@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import Firebase
 
 class LogInViewController: UIViewController {
+    
+    private var delegate = LoginInspector()
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -71,51 +74,92 @@ class LogInViewController: UIViewController {
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .selected)
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .highlighted)
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .disabled)
-    
         button.setTitle("Log in", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 10
-
         button.translatesAutoresizingMaskIntoConstraints = false
-
-        button.addTarget(self, action: #selector(self.didTapButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.didTapLogInButton), for: .touchUpInside)
 
         return button
     }()
     
-    @objc private func didTapButton() {
+    private lazy var signUpButton: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(UIImage(named: "blue_pix"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .selected)
+        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .highlighted)
+        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .disabled)
+
+        button.setTitle("Sign up", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        button.addTarget(self, action: #selector(self.didTapSignUpButton), for: .touchUpInside)
+
+        return button
+    }()
+    
+    @objc private func didTapLogInButton() {
         
         let vc = ProfileViewController()
         
         #if DEBUG
-        
+
         let service = TestUserService()
-        
+
         #else
-        
+
         let service = CurrentUserService()
-        
+
         #endif
         
-        if service.authorization(login: loginTextField.text!) != nil {
-            vc.user = service.user
-            vc.modalPresentationStyle = .automatic
-            self.navigationController?.pushViewController(vc, animated: true)
-        } else {
-            let alertController = UIAlertController(title: "Неверный логин", message: "Данный логин не зарегистрирован в системе", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Ок", style: .default) { _ in
-                alertController.dismiss(animated: true)
+        if let login = loginTextField.text, let password = passwordTextField.text {
+            if delegate.delegateCheck(login: login, password: password) {
+                vc.user = service.user
+                vc.modalPresentationStyle = .automatic
+                self.navigationController?.pushViewController(vc, animated: true)
             }
-            alertController.addAction(action)
-            self.present(alertController, animated: true)
         }
     }
    
+    @objc private func didTapSignUpButton() {
+        
+        if let login = loginTextField.text, let password = passwordTextField.text {
+            delegate.delegateSignIn(login: login, password: password)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
         self.setupGesture()
         self.navigationController?.navigationBar.isHidden = true
+        setupAddTargetIsNotEmptyTextFields()
+    }
+    
+    func setupAddTargetIsNotEmptyTextFields() {
+        
+        logInButton.isEnabled = false
+        signUpButton.isEnabled = false
+        
+        loginTextField.addTarget(self, action: #selector(textFieldsIsNotEmpty),
+                                    for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textFieldsIsNotEmpty),
+                                    for: .editingChanged)
+    }
+        
+    @objc func textFieldsIsNotEmpty(sender: UITextField) {
+        
+        sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
+        
+        guard let login = loginTextField.text, !login.isEmpty,
+              let password = passwordTextField.text, password.count > 5
+        else {
+            return
+        }
+        logInButton.isEnabled = true
+        signUpButton.isEnabled = true
     }
     
     private func setupView() {
@@ -123,9 +167,11 @@ class LogInViewController: UIViewController {
         self.view.backgroundColor = .systemBackground
         
         self.view.addSubview(self.scrollView)
+        self.scrollView.addSubview(self.logoImageView)
         self.scrollView.addSubview(self.textFieldsStackView)
         self.scrollView.addSubview(self.logInButton)
-        self.scrollView.addSubview(self.logoImageView)
+        self.scrollView.addSubview(self.signUpButton)
+
         self.textFieldsStackView.addArrangedSubview(self.loginTextField)
         self.textFieldsStackView.addArrangedSubview(self.passwordTextField)
    
@@ -149,10 +195,14 @@ class LogInViewController: UIViewController {
             self.logInButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             self.logInButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             self.logInButton.heightAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.heightAnchor, multiplier: 0.06112469),
+            
+            self.signUpButton.topAnchor.constraint(equalTo: self.logInButton.bottomAnchor, constant: 8),
+            self.signUpButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            self.signUpButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            self.signUpButton.heightAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.heightAnchor, multiplier: 0.06112469)
             ])
     }
 
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.loginTextField.becomeFirstResponder()
@@ -162,7 +212,6 @@ class LogInViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         self.view.addGestureRecognizer(tapGesture)
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -176,17 +225,16 @@ class LogInViewController: UIViewController {
                                                object: nil)
     }
 
-
     @objc private func didShowKeyboard(_ notification: Notification) {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
               let keyboardRectangle = keyboardFrame.cgRectValue
               let keyboardHeight = keyboardRectangle.height
 
-            let loginButtonBottomPointY = self.logInButton.frame.origin.y + self.logInButton.frame.height
+            let signUpButtonBottomPointY = self.signUpButton.frame.origin.y + self.signUpButton.frame.height
             let keyboardOriginY =  self.view.frame.height - keyboardHeight
 
-            let offset = keyboardOriginY <= loginButtonBottomPointY
-            ? loginButtonBottomPointY - keyboardOriginY + 16
+            let offset = keyboardOriginY <= signUpButtonBottomPointY
+            ? signUpButtonBottomPointY - keyboardOriginY + 16
             : 0
 
             self.scrollView.contentOffset = CGPoint(x: 0, y: offset)
@@ -197,13 +245,9 @@ class LogInViewController: UIViewController {
         self.hideKeyboard()
     }
     
-    
     @objc private func hideKeyboard() {
         self.view.endEditing(true)
         self.scrollView.setContentOffset(.zero, animated: true)
     }
-
-
-    
 }
 
