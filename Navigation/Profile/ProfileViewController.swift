@@ -13,7 +13,8 @@ class ProfileViewController: UIViewController {
     public var user = User(login: " ", name: " ", avatar: UIImage(systemName: "person")!, status: " ")
     private var posts = StorageService.viewModel
     private var array = [photos]
-    
+    private var desc = ""
+    private var postForSave = Post(author: "", description: "", image: "", likes: 0, views: 0)
 
     private var startPoint: CGPoint?
 
@@ -188,6 +189,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 1 {
@@ -197,6 +200,13 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.descriptionLabel.text = posts[indexPath.row].description
                 cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
                 cell.viewsLabel.text = "Views: \(posts[indexPath.row].views)"
+                postForSave = posts[indexPath.row]
+                
+                let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+                tap.numberOfTapsRequired = 2
+                cell.addGestureRecognizer(tap)
+                desc = cell.descriptionLabel.text ?? ""
+                
                 return cell
                 
             }
@@ -213,6 +223,26 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             }
         return UITableViewCell()
     }
+
+    
+    @objc func doubleTapped() {
+        
+        print(postForSave.author)
+
+        if CoreDataMamanager.shared.fetchPost(with: postForSave.description)?.text == postForSave.description {
+            print("Такой пост уже сохранен")
+        } else {
+            CoreDataMamanager.shared.createPost(autor: postForSave.author,
+                                                image: postForSave.image,
+                                                description: postForSave.description,
+                                                likes: Int64(postForSave.likes),
+                                                views: Int64(postForSave.views))
+        }
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateSavedPosts"), object: nil)
+        
+    }
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         

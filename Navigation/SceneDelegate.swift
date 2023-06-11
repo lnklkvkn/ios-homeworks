@@ -24,16 +24,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         self.window = UIWindow(windowScene: windowScene)
-        let feedNavController = UINavigationController(rootViewController: FeedViewController())
-        let logInViewController = UINavigationController(rootViewController: LogInViewController())
-        let tabBarController = UITabBarController()
-
-        tabBarController.viewControllers = [ feedNavController , logInViewController]
-        tabBarController.viewControllers?.enumerated().forEach {
-            $1.tabBarItem.title = $0 == 0 ? "Feed" : "Profile"
-            $1.tabBarItem.image = $0 == 0 ? UIImage(systemName: "house.fill") : UIImage(systemName: "person.fill")
+        
+        func createFeedNavController() -> UINavigationController {
+            let feedVC = FeedViewController()
+            feedVC.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "house.fill"), tag: 0)
+            return UINavigationController(rootViewController: feedVC)
         }
-        self.window?.rootViewController = tabBarController
+        
+        func createLoginViewController() -> UINavigationController {
+            let loginVC = LogInViewController()
+            loginVC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.fill"), tag: 1)
+            return UINavigationController(rootViewController: loginVC)
+        }
+        
+        func createSavedPostsViewController() -> UINavigationController {
+            let savedPostsVC = SavedPostsViewController()
+            savedPostsVC.tabBarItem = UITabBarItem(title: "Saved", image: UIImage(systemName: "square.and.arrow.up"), tag: 2)
+            return UINavigationController(rootViewController: savedPostsVC)
+        }
+        
+        func createTabBarController() -> UITabBarController {
+            let tabBarController = UITabBarController()
+            tabBarController.viewControllers = [ createFeedNavController() , createLoginViewController(), createSavedPostsViewController()]
+            return tabBarController
+            
+        }
+
+        self.window?.rootViewController = createTabBarController()
         self.window?.makeKeyAndVisible()
         
     }
@@ -48,26 +65,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
 
-    func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
-    }
+    func sceneDidBecomeActive(_ scene: UIScene) {}
 
-    func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
-    }
+    func sceneWillResignActive(_ scene: UIScene) {}
 
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
-    }
+    func sceneWillEnterForeground(_ scene: UIScene) {}
 
-    func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
-    }
+    func sceneDidEnterBackground(_ scene: UIScene) {}
 
 
 }
