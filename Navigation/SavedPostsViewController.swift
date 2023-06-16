@@ -8,9 +8,12 @@
 import UIKit
 import StorageService
 
-class SavedPostsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    
+protocol SavedPostsVCDelegate: AnyObject {
+    func deletePost(postForDel: Post)
+}
+
+class SavedPostsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SavedPostsVCDelegate {
+
     private lazy var tableView: UITableView = {
 
         var tableView = UITableView(frame: .zero, style: .grouped)
@@ -26,14 +29,22 @@ class SavedPostsViewController: UIViewController, UITableViewDataSource, UITable
         self.view.backgroundColor = .black
         setupView()
         NotificationCenter.default.addObserver(self, selector: #selector(doAfterNotified), name: NSNotification.Name("updateSavedPosts"), object: nil)
-
     }
         
+    func deletePost(postForDel: Post) {
+        let group = DispatchGroup()
+        group.enter()
+        CoreDataMamanager.shared.deletaPost(with: postForDel.description)
+        group.leave()
+        group.notify(queue: .main) {
+            self.tableView.reloadData()
+        }
+    }
+    
     @objc private func doAfterNotified() {
         
         let group = DispatchGroup()
         group.enter()
-        print("****** ПРИШЛО УВЕДОМЛЕНИЕ О НОВЫХ СОХРАНЕНКАХ ********")
         group.leave()
         group.notify(queue: .main) {
             self.tableView.reloadData()
@@ -62,45 +73,21 @@ class SavedPostsViewController: UIViewController, UITableViewDataSource, UITable
         CoreDataMamanager.shared.fetchPosts().count
     }
     
-    var desc = ""
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? PostTableViewCell {
             let posts = CoreDataMamanager.shared.fetchPosts()
+            cell.delegateForDel = self
             cell.autorLabel.text = posts[indexPath.row].autor
             cell.postImageView.image = UIImage(named: posts[indexPath.row].image ?? "")
             cell.descriptionLabel.text = posts[indexPath.row].text
             cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
             cell.viewsLabel.text = "Views: \(posts[indexPath.row].views)"
             
-            
-            let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
-            tap.numberOfTapsRequired = 2
-            cell.addGestureRecognizer(tap)
-            desc = cell.descriptionLabel.text ?? ""
-            
             return cell
         }
 
         return UITableViewCell()
     }
-    
-
-    
-    @objc func doubleTapped() {
-        
-        let group = DispatchGroup()
-        group.enter()
-        CoreDataMamanager.shared.deletaPost(with: desc)
-        
-        print("******  Удалить пост ********")
-        group.leave()
-        group.notify(queue: .main) {
-            self.tableView.reloadData()
-        }
-        
-    }
-    
     
 }

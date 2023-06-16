@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import StorageService
 
 class PostTableViewCell: UITableViewCell {
         
+    weak var delegate: ProfileVCDelegate?
+    weak var delegateForDel: SavedPostsVCDelegate?
+
     private(set) lazy var autorLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .bold)
@@ -18,8 +22,14 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
+    private(set) lazy var imageName: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+    
     private(set) lazy var postImageView: UIImageView = {
         let imageView = UIImageView()
+        let name = String()
         imageView.backgroundColor = .black
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
@@ -61,7 +71,7 @@ class PostTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
         self.setupView()
     }
-    
+
     private func setupView() {
         self.contentView.addSubview(self.autorLabel)
         self.contentView.addSubview(self.postImageView)
@@ -69,13 +79,20 @@ class PostTableViewCell: UITableViewCell {
         self.contentView.addSubview(self.likesLabel)
         self.contentView.addSubview(self.viewsLabel)
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+        tap.numberOfTapsRequired = 2
+        self.contentView.addGestureRecognizer(tap)
+        
+        let tripleTap = UITapGestureRecognizer(target: self, action: #selector(tripleTapped))
+        tripleTap.numberOfTapsRequired = 3
+        self.contentView.addGestureRecognizer(tripleTap)
+        
         NSLayoutConstraint.activate([
             
             self.autorLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
             self.autorLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.autorLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
            
-
             self.postImageView.topAnchor.constraint(equalTo: self.autorLabel.bottomAnchor, constant: 16),
             self.postImageView.widthAnchor.constraint(equalTo: self.contentView.widthAnchor),
             self.postImageView.heightAnchor.constraint(equalTo: self.contentView.widthAnchor),
@@ -84,18 +101,45 @@ class PostTableViewCell: UITableViewCell {
             self.descriptionLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.descriptionLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
           
-            
             self.likesLabel.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 16),
             self.likesLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.likesLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16),
             
-           
             self.viewsLabel.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 16),
             self.viewsLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
             self.viewsLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16),
      
         ])
     }
+    
+    @objc func doubleTapped() {
+
+        let likes = self.likesLabel.text ?? "0"
+        let views = self.viewsLabel.text ?? "0"
+        let postForSave = Post(author: self.autorLabel.text ?? "",
+                               description: self.descriptionLabel.text ?? "",
+                               image: self.imageName.text ?? "",
+                               likes: Int(String(likes.dropFirst(7))) ?? 1,
+                               views: Int(String(views.dropFirst(7))) ?? 1
+                               )
+        delegate?.savePost(postForSave: postForSave)
+        print(postForSave)
+    }
+    
+    @objc func tripleTapped() {
+        
+        let likes = self.likesLabel.text ?? "0"
+        let views = self.viewsLabel.text ?? "0"
+        let postForDel = Post(author: self.autorLabel.text ?? "",
+                               description: self.descriptionLabel.text ?? "",
+                               image: self.imageName.text ?? "",
+                              likes: Int(String(likes.dropFirst(7))) ?? 1,
+                              views: Int(String(views.dropFirst(7))) ?? 1
+                              )
+        delegateForDel?.deletePost(postForDel: postForDel)
+        print(postForDel)
+    }
+
         
 }
 
