@@ -7,26 +7,29 @@
 
 import UIKit
 import Firebase
+import RealmSwift
 
 class LogInViewController: UIViewController {
     
-    private var delegate = LoginInspector()
+    private let realmService = RealmServiceImp()
     
     private lazy var scrollView: UIScrollView = {
+        
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
     
     private lazy var logoImageView: UIImageView = {
+        
         let imageView = UIImageView()
         imageView.image = UIImage(named: "logo")
         imageView.translatesAutoresizingMaskIntoConstraints = false
        return imageView
    }()
     
-
     private lazy var textFieldsStackView: UIStackView = {
+        
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
@@ -34,8 +37,8 @@ class LogInViewController: UIViewController {
         return stackView
     }()
     
-    
     private lazy var loginTextField: UITextField = {
+        
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.backgroundColor = UIColor.systemGray6
@@ -47,11 +50,11 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.placeholder = "Email of phone"
         textField.translatesAutoresizingMaskIntoConstraints = false
-        
         return textField
     }()
     
     private lazy var passwordTextField: UITextField = {
+        
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.isSecureTextEntry = true
@@ -64,11 +67,11 @@ class LogInViewController: UIViewController {
         textField.autocorrectionType = .no
         textField.placeholder = "Password"
         textField.translatesAutoresizingMaskIntoConstraints = false
-
         return textField
     }()
     
     private lazy var logInButton: UIButton = {
+        
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "blue_pix"), for: .normal)
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .selected)
@@ -79,46 +82,65 @@ class LogInViewController: UIViewController {
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(self.didTapLogInButton), for: .touchUpInside)
-
         return button
     }()
     
     private lazy var signUpButton: UIButton = {
+        
         let button = UIButton()
         button.setBackgroundImage(UIImage(named: "blue_pix"), for: .normal)
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .selected)
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .highlighted)
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .disabled)
-
         button.setTitle("Sign up", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
-
         button.addTarget(self, action: #selector(self.didTapSignUpButton), for: .touchUpInside)
-
         return button
     }()
     
-    @objc private func didTapLogInButton() {
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        self.setupView()
+        self.setupGesture()
+        self.navigationController?.navigationBar.isHidden = true
+        setupAddTargetIsNotEmptyTextFields()
+        isAutorized()
+    }
+    
+    private func loadProfile() {
         
         let vc = ProfileViewController()
-        
         #if DEBUG
-
         let service = TestUserService()
-
         #else
-
         let service = CurrentUserService()
-
         #endif
+        vc.user = service.user
+        vc.modalPresentationStyle = .automatic
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func isAutorized() {
+        
+        if UserDefaults.standard.string(forKey: "isAutorized") == "true" {
+            loadProfile()
+        } else {
+            return
+        }
+    }
+    
+    @objc private func didTapLogInButton() {
         
         if let login = loginTextField.text, let password = passwordTextField.text {
-            if delegate.delegateCheck(login: login, password: password) {
-                vc.user = service.user
-                vc.modalPresentationStyle = .automatic
-                self.navigationController?.pushViewController(vc, animated: true)
+            
+            if realmService.checkCredentials(login: login, password: password) {
+                UserDefaults.standard.set("true", forKey: "isAutorized")
+                loadProfile()
+            } else {
+                AlertErrorSample.shared.alert(title: "Ошибка входа", message: "Неверный логин или пароль")
             }
         }
     }
@@ -126,16 +148,13 @@ class LogInViewController: UIViewController {
     @objc private func didTapSignUpButton() {
         
         if let login = loginTextField.text, let password = passwordTextField.text {
-            delegate.delegateSignIn(login: login, password: password)
+            
+            if realmService.signUp(login: login, password: password) {
+                AlertErrorSample.shared.alert(title: "Успешная регистрация", message: "Ваш аккаунт создан!")
+            } else {
+                AlertErrorSample.shared.alert(title: "Ошибка регистрации", message: "Пользователь с таким логином уже существует")
+            }
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.setupView()
-        self.setupGesture()
-        self.navigationController?.navigationBar.isHidden = true
-        setupAddTargetIsNotEmptyTextFields()
     }
     
     func setupAddTargetIsNotEmptyTextFields() {
@@ -154,7 +173,7 @@ class LogInViewController: UIViewController {
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
         
         guard let login = loginTextField.text, !login.isEmpty,
-              let password = passwordTextField.text, password.count > 5
+              let password = passwordTextField.text, password.count > 0
         else {
             return
         }
@@ -165,7 +184,6 @@ class LogInViewController: UIViewController {
     private func setupView() {
         
         self.view.backgroundColor = .systemBackground
-        
         self.view.addSubview(self.scrollView)
         self.scrollView.addSubview(self.logoImageView)
         self.scrollView.addSubview(self.textFieldsStackView)
