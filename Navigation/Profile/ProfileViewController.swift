@@ -17,6 +17,7 @@ class ProfileViewController: UIViewController, ProfileVCDelegate {
     public var user = User(login: " ", name: " ", avatar: UIImage(systemName: "person")!, status: " ")
     private var posts = StorageService.viewModel
     private var array = [photos]
+    private var reserveArray = [darkPhotos]
 
     private var startPoint: CGPoint?
     
@@ -69,6 +70,7 @@ class ProfileViewController: UIViewController, ProfileVCDelegate {
         self.setupView()
         self.setupNavigationBar()
         setupGestures()
+        user = CurrentUserService().user
 
     }
     
@@ -212,7 +214,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? PostTableViewCell {
                 cell.delegate = self
                 cell.autorLabel.text = posts[indexPath.row].author
-                cell.postImageView.image = UIImage(named: posts[indexPath.row].image)
+                if UITraitCollection.current.userInterfaceStyle == .dark {
+                    cell.postImageView.image = UIImage(named: reservedImages[indexPath.row])
+                } else {
+                    cell.postImageView.image = UIImage(named: posts[indexPath.row].image)
+                }
                 cell.descriptionLabel.text = posts[indexPath.row].description
                 cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
                 cell.viewsLabel.text = "Views: \(posts[indexPath.row].views)"
@@ -224,10 +230,20 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "PhotosCell",for: indexPath) as? PhotosTableViewCell {
                     cell.photosLabel.text = array[indexPath.row].title
                     cell.arrowImageView.image = UIImage(systemName: array[indexPath.row].arrow)
-                    cell.firstPhotoImageView.image = UIImage(named: array[indexPath.row].fPhoto)
-                    cell.secondPhotoImageView.image = UIImage(named: array[indexPath.row].sPhoto)
-                    cell.thirdPhotoImageView.image = UIImage(named: array[indexPath.row].tPhoto)
-                    cell.fourthPhotoImageView.image = UIImage(named: array[indexPath.row].fourPhoto)
+                    
+                    if UITraitCollection.current.userInterfaceStyle == .dark {
+                        cell.firstPhotoImageView.image = UIImage(named: reserveArray[indexPath.row].fPhoto)
+                        cell.secondPhotoImageView.image = UIImage(named: reserveArray[indexPath.row].sPhoto)
+                        cell.thirdPhotoImageView.image = UIImage(named: reserveArray[indexPath.row].tPhoto)
+                        cell.fourthPhotoImageView.image = UIImage(named: reserveArray[indexPath.row].fourPhoto)
+                   
+                    } else {
+                        cell.firstPhotoImageView.image = UIImage(named: array[indexPath.row].fPhoto)
+                        cell.secondPhotoImageView.image = UIImage(named: array[indexPath.row].sPhoto)
+                        cell.thirdPhotoImageView.image = UIImage(named: array[indexPath.row].tPhoto)
+                        cell.fourthPhotoImageView.image = UIImage(named: array[indexPath.row].fourPhoto)
+                    }
+                    
                     return cell
                 }
             }
@@ -240,6 +256,16 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             self.tableView.deselectRow(at: indexPath, animated: true)
             let vc = PhotosViewController()
             navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if UITraitCollection.current.userInterfaceStyle == .dark {
+            tableView.reloadData()
+        } else {
+            tableView.reloadData()
         }
     }
 }

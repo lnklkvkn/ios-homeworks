@@ -9,7 +9,6 @@ import UIKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
     
-    
     private var statusText: String = ""
     
     private lazy var profileHeaderView: UIView = {
@@ -35,7 +34,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         let label = UILabel()
         label.text = "Catty Clappy"
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        label.textColor = .black
+        label.textColor = Palette.tintBackgroundColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -44,14 +43,14 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         let label = UILabel()
         label.text = "Waiting for something..."
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .gray
+        label.textColor = Palette.subTintBackgroundColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var setStatusButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = Palette.buttonBackgroundColor
         button.setTitle("Show status", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 4
@@ -68,7 +67,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     private lazy var statusLabelTextField : UITextField = {
         let textField = UITextField()
-        textField.backgroundColor = .white
+        textField.backgroundColor = Palette.viewBackgroundColor
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.black.cgColor
         textField.layer.cornerRadius = 12
