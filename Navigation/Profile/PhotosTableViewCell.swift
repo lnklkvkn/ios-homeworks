@@ -12,7 +12,7 @@ class PhotosTableViewCell: UITableViewCell {
     private(set) lazy var photosLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 24, weight: .bold)
-        label.textColor = .black
+        label.textColor = Palette.tintBackgroundColor
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -20,7 +20,7 @@ class PhotosTableViewCell: UITableViewCell {
     
     private(set) lazy var arrowImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .black
+        imageView.tintColor = Palette.tintBackgroundColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -124,5 +124,5 @@ struct Photos {
 }
 
 var photos = Photos(title: "Photos", arrow: "arrow.right", fPhoto: "1", sPhoto: "2", tPhoto: "3", fourPhoto: "4")
-
+var darkPhotos = Photos(title: "Photos", arrow: "arrow.right", fPhoto: "1r", sPhoto: "2r", tPhoto: "3r", fourPhoto: "4r")
 

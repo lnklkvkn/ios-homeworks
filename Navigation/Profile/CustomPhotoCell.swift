@@ -24,8 +24,8 @@ class CustomPhotoCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup(with image: String) {
-        self.photo.image = UIImage(named: image)
+    func setup(with image: UIImage) {
+        self.photo.image = image
     }
 
     private func setupView() {
@@ -40,4 +40,4 @@ class CustomPhotoCell: UICollectionViewCell {
     }
 }
 
-var photosCollection = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
+

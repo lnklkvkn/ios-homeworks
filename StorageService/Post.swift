@@ -79,3 +79,4 @@ var postC = Post(author: Autors.c.rawValue, description: Descriptions.lermontov.
 var postD = Post(author: Autors.d.rawValue, description: Descriptions.dostoevsky.rawValue, image: Image.dostoevsky.rawValue, likes: Likes.d.rawValue, views: Views.d.rawValue)
 
 public let viewModel = [postA, postB, postC, postD]
+public let reservedImages = ["Chechov2", "Gogol2", "Lermontov2", "Dostoevsky2"]

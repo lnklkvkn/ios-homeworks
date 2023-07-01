@@ -16,7 +16,7 @@ class PostTableViewCell: UITableViewCell {
     private(set) lazy var autorLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .black
+        label.textColor = Palette.tintBackgroundColor
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -30,7 +30,7 @@ class PostTableViewCell: UITableViewCell {
     private(set) lazy var postImageView: UIImageView = {
         let imageView = UIImageView()
         let name = String()
-        imageView.backgroundColor = .black
+        imageView.backgroundColor = Palette.tintBackgroundColor
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +40,7 @@ class PostTableViewCell: UITableViewCell {
     private(set) lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .systemGray
+        label.textColor = Palette.subTintBackgroundColor
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -49,7 +49,7 @@ class PostTableViewCell: UITableViewCell {
     private(set) lazy var likesLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .regular)
-        label.textColor = .black
+        label.textColor = Palette.tintBackgroundColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -57,7 +57,7 @@ class PostTableViewCell: UITableViewCell {
     private(set) lazy var viewsLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .regular)
-        label.textColor = .black
+        label.textColor = Palette.tintBackgroundColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
