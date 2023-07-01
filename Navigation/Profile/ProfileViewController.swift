@@ -8,15 +8,18 @@
 import UIKit
 import StorageService
 
-class ProfileViewController: UIViewController {
-    
+protocol ProfileVCDelegate: AnyObject {
+    func savePost(postForSave: Post)
+}
+
+class ProfileViewController: UIViewController, ProfileVCDelegate {
+
     public var user = User(login: " ", name: " ", avatar: UIImage(systemName: "person")!, status: " ")
     private var posts = StorageService.viewModel
     private var array = [photos]
-    
 
     private var startPoint: CGPoint?
-
+    
     private lazy var tableView: UITableView = {
 
         var tableView = UITableView(frame: .zero, style: .grouped)
@@ -66,6 +69,7 @@ class ProfileViewController: UIViewController {
         self.setupView()
         self.setupNavigationBar()
         setupGestures()
+
     }
     
     private func setupNavigationBar(){
@@ -93,7 +97,6 @@ class ProfileViewController: UIViewController {
         view.addSubview(closureButton)
         self.closureButton.isHidden = true
         view.addSubview(avatarImageView)
-        
         
         NSLayoutConstraint.activate([
             
@@ -154,6 +157,21 @@ class ProfileViewController: UIViewController {
             self.closureButton.isHidden = true
         }
     }
+    
+    func savePost(postForSave: Post) {
+
+        if CoreDataMamanager.shared.fetchPost(with: postForSave.description)?.text == postForSave.description {
+            print("Такой пост уже сохранен")
+        } else {
+            CoreDataMamanager.shared.createPost(autor: postForSave.author,
+                                                image: postForSave.image,
+                                                description: postForSave.description,
+                                                likes: Int64(postForSave.likes),
+                                                views: Int64(postForSave.views))
+        }
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateSavedPosts"), object: nil)
+    }
 }
 
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
@@ -192,13 +210,15 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         
         if indexPath.section == 1 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as? PostTableViewCell {
+                cell.delegate = self
                 cell.autorLabel.text = posts[indexPath.row].author
                 cell.postImageView.image = UIImage(named: posts[indexPath.row].image)
                 cell.descriptionLabel.text = posts[indexPath.row].description
                 cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
                 cell.viewsLabel.text = "Views: \(posts[indexPath.row].views)"
-                return cell
+                cell.imageName.text = posts[indexPath.row].image
                 
+                return cell
             }
         } else if indexPath.section == 0 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "PhotosCell",for: indexPath) as? PhotosTableViewCell {
@@ -213,7 +233,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             }
         return UITableViewCell()
     }
-    
+ 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.section == 0 {

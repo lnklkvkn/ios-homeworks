@@ -10,6 +10,7 @@
 		FD1204B628B6318F006AE0EE /* ProfileTableHederView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1204B528B6318F006AE0EE /* ProfileTableHederView.swift */; };
 		FD1204B828B6320C006AE0EE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1204B728B6320C006AE0EE /* ProfileViewController.swift */; };
 		FD16BA5828ECC2E90086D211 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD16BA5728ECC2E90086D211 /* PhotosViewController.swift */; };
+		FD2197752A33AC26006F82D9 /* SavedPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2197742A33AC26006F82D9 /* SavedPostsViewController.swift */; };
 		FD37152728C752B800616C30 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD37152628C752B800616C30 /* LogInViewController.swift */; };
 		FD75978529184208003C6EE8 /* StorageService.docc in Sources */ = {isa = PBXBuildFile; fileRef = FD75978429184208003C6EE8 /* StorageService.docc */; };
 		FD75979329184208003C6EE8 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = FD75978329184208003C6EE8 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -31,6 +32,9 @@
 		FDC74F28289E8C6A0009604F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC74F27289E8C6A0009604F /* ViewController.swift */; };
 		FDC74F2D289E8C730009604F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDC74F2C289E8C730009604F /* Assets.xcassets */; };
 		FDC74F30289E8C730009604F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDC74F2E289E8C730009604F /* LaunchScreen.storyboard */; };
+		FDC81C8F2A34756C0092F444 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FDC81C8D2A34756C0092F444 /* CoreData.xcdatamodeld */; };
+		FDC81C932A3477290092F444 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC81C912A3477290092F444 /* Post+CoreDataProperties.swift */; };
+		FDC81C952A347ADE0092F444 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC81C942A347ADE0092F444 /* CoreDataManager.swift */; };
 		FDD9828828CB34E30076D9B5 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD9828728CB34E30076D9B5 /* PostTableViewCell.swift */; };
 		FDEA3F4529E01E6700C78389 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FDEA3F4429E01E6700C78389 /* GoogleService-Info.plist */; };
 		FDEA3F4629E01E6700C78389 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FDEA3F4429E01E6700C78389 /* GoogleService-Info.plist */; };
@@ -66,6 +70,7 @@
 		FD1204B528B6318F006AE0EE /* ProfileTableHederView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHederView.swift; sourceTree = "<group>"; };
 		FD1204B728B6320C006AE0EE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		FD16BA5728ECC2E90086D211 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
+		FD2197742A33AC26006F82D9 /* SavedPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPostsViewController.swift; sourceTree = "<group>"; };
 		FD37152628C752B800616C30 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		FD75978129184207003C6EE8 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD75978329184208003C6EE8 /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
@@ -88,6 +93,9 @@
 		FDC74F2C289E8C730009604F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FDC74F2F289E8C730009604F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FDC74F31289E8C730009604F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDC81C8E2A34756C0092F444 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		FDC81C912A3477290092F444 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FDC81C942A347ADE0092F444 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		FDD9828728CB34E30076D9B5 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		FDEA3F4429E01E6700C78389 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FDFA765A28E894C000BA8CF8 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
@@ -160,6 +168,9 @@
 		FDC74F17289E8C6A0009604F = {
 			isa = PBXGroup;
 			children = (
+				FDC81C912A3477290092F444 /* Post+CoreDataProperties.swift */,
+				FDC81C942A347ADE0092F444 /* CoreDataManager.swift */,
+				FDC81C8D2A34756C0092F444 /* CoreData.xcdatamodeld */,
 				FDC74F22289E8C6A0009604F /* Navigation */,
 				FD75978229184207003C6EE8 /* StorageService */,
 				FDC74F21289E8C6A0009604F /* Products */,
@@ -180,6 +191,7 @@
 			children = (
 				FDC74F23289E8C6A0009604F /* AppDelegate.swift */,
 				FDC74F25289E8C6A0009604F /* SceneDelegate.swift */,
+				FD2197742A33AC26006F82D9 /* SavedPostsViewController.swift */,
 				FD8F446128ABBF27003041D1 /* FeedViewController.swift */,
 				FD8FC76829E1A4CF00C1F8E2 /* LogIn */,
 				FD1204B428B63169006AE0EE /* Profile */,
@@ -329,9 +341,12 @@
 				FD16BA5828ECC2E90086D211 /* PhotosViewController.swift in Sources */,
 				FDD9828828CB34E30076D9B5 /* PostTableViewCell.swift in Sources */,
 				FD8F446228ABBF27003041D1 /* FeedViewController.swift in Sources */,
+				FD2197752A33AC26006F82D9 /* SavedPostsViewController.swift in Sources */,
 				FDC74F28289E8C6A0009604F /* ViewController.swift in Sources */,
 				FDA5A03229E41388003F659F /* LoginInspector.swift in Sources */,
 				FD37152728C752B800616C30 /* LogInViewController.swift in Sources */,
+				FDC81C952A347ADE0092F444 /* CoreDataManager.swift in Sources */,
+				FDC81C932A3477290092F444 /* Post+CoreDataProperties.swift in Sources */,
 				FD863E4228AE666000475D1C /* InfoViewController.swift in Sources */,
 				FDC74F24289E8C6A0009604F /* AppDelegate.swift in Sources */,
 				FD9536142927D8F100124C16 /* UserModel.swift in Sources */,
@@ -344,6 +359,7 @@
 				FDC74F26289E8C6A0009604F /* SceneDelegate.swift in Sources */,
 				FD8FC76E29E1C28400C1F8E2 /* AlertExtencion.swift in Sources */,
 				FD1204B628B6318F006AE0EE /* ProfileTableHederView.swift in Sources */,
+				FDC81C8F2A34756C0092F444 /* CoreData.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,6 +667,19 @@
 			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		FDC81C8D2A34756C0092F444 /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FDC81C8E2A34756C0092F444 /* CoreData.xcdatamodel */,
+			);
+			currentVersion = FDC81C8E2A34756C0092F444 /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = FDC74F18289E8C6A0009604F /* Project object */;
 }
