@@ -1,0 +1,37 @@
+/* 
+  Localizable.strings
+  Navigation
+
+  Created by ln on 02.07.2023.
+  
+*/
+
+"login.placeholder" = "Емайл или номер телефона";
+"password.placeholder" = "Пароль";
+"login.button.title"= "Войти";
+"sign.up.button.title" = "Зарегистрироваться";
+
+"user.is.not.found" = "Пользователь не найден";
+"cancel" = "Отмена";
+"offer.to.register" = "Зарегистрировать аккаунт?";
+"registration" = "Регистрация";
+"login.failed" = "Ошибка входа";
+"successful.registration" = "Успешная регистрация";
+"reg.congr" = "Ваш аккаунт создан!";
+
+"show.post.button.title" = "Показать пост";
+
+"feed.controller" = "Новости";
+"profile.controller" = "Профиль";
+
+"likes" = "Лайки";
+"views" = "Просмотры";
+
+"set.status.button.title" = "Показать статус";
+"set.status.placeholder" = " Опубликуйте Ваш статус...";
+
+"photo.gallery" = "Фото галлерея";
+
+"back" = "Обратно";
+
+"photos" = "Фото";

@@ -1,0 +1,42 @@
+/* 
+  Localizable.strings
+  Navigation
+
+  Created by ln on 02.07.2023.
+  
+*/
+
+"login.placeholder" = "Email or phone";
+"password.placeholder" = "Password";
+"login.button.title"= "Log in";
+"sign.up.button.title" = "Sign up";
+
+"user.is.not.found" = "User is not found";
+"cancel" = "Cancel";
+"offer.to.register" = "Register a new account?";
+"registration" = "Registration";
+"login.failed" = "Login failed";
+"successful.registration" = "Successful registration";
+"reg.congr" = "Your account has been created";
+
+"show.post.button.title" = "Show post";
+
+"feed.controller" = "Feed";
+"profile.controller" = "Profile";
+
+"likes" = "Likes";
+"views" = "Views";
+
+"set.status.button.title" = "Show status";
+"set.status.placeholder" = "  Set your status...";
+
+"photo.gallery" = "Photo Gallery";
+
+"back" = "Back";
+
+"photos" = "Photos";
+
+
+
+
+

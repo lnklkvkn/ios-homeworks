@@ -11,6 +11,7 @@
 		FD1204B828B6320C006AE0EE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1204B728B6320C006AE0EE /* ProfileViewController.swift */; };
 		FD16BA5828ECC2E90086D211 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD16BA5728ECC2E90086D211 /* PhotosViewController.swift */; };
 		FD37152728C752B800616C30 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD37152628C752B800616C30 /* LogInViewController.swift */; };
+		FD5F69F22A51BF9700B9B5C5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FD5F69F42A51BF9700B9B5C5 /* Localizable.strings */; };
 		FD75978529184208003C6EE8 /* StorageService.docc in Sources */ = {isa = PBXBuildFile; fileRef = FD75978429184208003C6EE8 /* StorageService.docc */; };
 		FD75979329184208003C6EE8 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = FD75978329184208003C6EE8 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FD75979629184208003C6EE8 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD75978129184207003C6EE8 /* StorageService.framework */; };
@@ -67,6 +68,9 @@
 		FD1204B728B6320C006AE0EE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		FD16BA5728ECC2E90086D211 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		FD37152628C752B800616C30 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		FD5F69F12A51BEFB00B9B5C5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		FD5F69F32A51BF9700B9B5C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FD5F69F52A51BF9E00B9B5C5 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FD75978129184207003C6EE8 /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD75978329184208003C6EE8 /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		FD75978429184208003C6EE8 /* StorageService.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = StorageService.docc; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 			children = (
 				FDC74F23289E8C6A0009604F /* AppDelegate.swift */,
 				FDC74F25289E8C6A0009604F /* SceneDelegate.swift */,
+				FD5F69F42A51BF9700B9B5C5 /* Localizable.strings */,
 				FD8F446128ABBF27003041D1 /* FeedViewController.swift */,
 				FD8FC76829E1A4CF00C1F8E2 /* LogIn */,
 				FD1204B428B63169006AE0EE /* Profile */,
@@ -275,6 +280,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = FDC74F17289E8C6A0009604F;
 			packageReferences = (
@@ -304,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FDC74F30289E8C730009604F /* LaunchScreen.storyboard in Resources */,
+				FD5F69F22A51BF9700B9B5C5 /* Localizable.strings in Resources */,
 				FDC74F2D289E8C730009604F /* Assets.xcassets in Resources */,
 				FDEA3F4529E01E6700C78389 /* GoogleService-Info.plist in Resources */,
 			);
@@ -358,10 +365,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		FD5F69F42A51BF9700B9B5C5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FD5F69F32A51BF9700B9B5C5 /* en */,
+				FD5F69F52A51BF9E00B9B5C5 /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		FDC74F2E289E8C730009604F /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				FDC74F2F289E8C730009604F /* Base */,
+				FD5F69F12A51BEFB00B9B5C5 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -435,6 +452,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -495,6 +513,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

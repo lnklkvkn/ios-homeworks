@@ -45,7 +45,7 @@ class LogInViewController: UIViewController {
         textField.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         textField.font = UIFont(name: "systemFont-Normal", size: 16)
         textField.autocapitalizationType = .none
-        textField.placeholder = "Email of phone"
+        textField.placeholder = NSLocalizedString("login.placeholder", comment: "")
         textField.translatesAutoresizingMaskIntoConstraints = false
         
         return textField
@@ -62,7 +62,7 @@ class LogInViewController: UIViewController {
         textField.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         textField.font = UIFont(name: "systemFont-Normal", size: 16)
         textField.autocorrectionType = .no
-        textField.placeholder = "Password"
+        textField.placeholder = NSLocalizedString("password.placeholder", comment: "")
         textField.translatesAutoresizingMaskIntoConstraints = false
 
         return textField
@@ -74,7 +74,7 @@ class LogInViewController: UIViewController {
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .selected)
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .highlighted)
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .disabled)
-        button.setTitle("Log in", for: .normal)
+        button.setTitle(NSLocalizedString("login.button.title", comment: ""), for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -90,7 +90,7 @@ class LogInViewController: UIViewController {
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .highlighted)
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .disabled)
 
-        button.setTitle("Sign up", for: .normal)
+        button.setTitle(NSLocalizedString("sign.up.button.title", comment: ""), for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -114,13 +114,13 @@ class LogInViewController: UIViewController {
 
         #endif
         
-        if let login = loginTextField.text, let password = passwordTextField.text {
-            if delegate.delegateCheck(login: login, password: password) {
+//        if let login = loginTextField.text, let password = passwordTextField.text {
+//            if delegate.delegateCheck(login: login, password: password) {
                 vc.user = service.user
                 vc.modalPresentationStyle = .automatic
                 self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
+//            }
+//        }
     }
    
     @objc private func didTapSignUpButton() {
@@ -154,7 +154,7 @@ class LogInViewController: UIViewController {
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
         
         guard let login = loginTextField.text, !login.isEmpty,
-              let password = passwordTextField.text, password.count > 5
+              let password = passwordTextField.text, password.count > 0
         else {
             return
         }

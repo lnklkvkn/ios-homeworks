@@ -52,7 +52,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var setStatusButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .systemBlue
-        button.setTitle("Show status", for: .normal)
+        button.setTitle(NSLocalizedString("set.status.button.title", comment: ""), for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 4
         button.layer.shadowColor = UIColor.black.cgColor
@@ -74,7 +74,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         textField.layer.cornerRadius = 12
         textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         textField.textColor = .black
-        textField.placeholder = "  Set your status..."
+        textField.placeholder = NSLocalizedString("set.status.placeholder", comment: "")
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(self.statusTextChanged), for: .editingChanged)
         

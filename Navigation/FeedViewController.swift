@@ -22,7 +22,7 @@ class FeedViewController: UIViewController {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
         button.backgroundColor = .systemBlue
         button.addTarget(self, action: #selector(self.didTapButton), for: .touchUpInside)
-        button.setTitle("Показать пост", for: .normal)
+        button.setTitle(NSLocalizedString("show.post.button.title", comment: ""), for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -32,7 +32,7 @@ class FeedViewController: UIViewController {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
         button.backgroundColor = .systemBlue
         button.addTarget(self, action: #selector(self.didTapButton), for: .touchUpInside)
-        button.setTitle("Показать пост", for: .normal)
+        button.setTitle(NSLocalizedString("show.post.button.title", comment: ""), for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

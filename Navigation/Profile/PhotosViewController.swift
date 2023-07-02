@@ -46,9 +46,9 @@ class PhotosViewController: UIViewController {
     
     private func setupNavigationBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = false
-        self.navigationController?.visibleViewController?.navigationItem.title = "Photo Gallery"
+        self.navigationController?.visibleViewController?.navigationItem.title = NSLocalizedString("photo.gallery", comment: "")
         
-        self.navigationController?.navigationBar.topItem?.title = "Back"
+        self.navigationController?.navigationBar.topItem?.title = NSLocalizedString("back", comment: "")
         self.navigationController?.navigationBar.isHidden = false
     }
     

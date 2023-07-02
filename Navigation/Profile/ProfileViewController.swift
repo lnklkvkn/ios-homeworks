@@ -70,7 +70,7 @@ class ProfileViewController: UIViewController {
     
     private func setupNavigationBar(){
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "Profile"
+        navigationItem.title = NSLocalizedString("profile.controller", comment: "")
     }
     
     override func viewWillLayoutSubviews() {
@@ -195,8 +195,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.autorLabel.text = posts[indexPath.row].author
                 cell.postImageView.image = UIImage(named: posts[indexPath.row].image)
                 cell.descriptionLabel.text = posts[indexPath.row].description
-                cell.likesLabel.text = "Likes: \(posts[indexPath.row].likes)"
-                cell.viewsLabel.text = "Views: \(posts[indexPath.row].views)"
+                cell.likesLabel.text = NSLocalizedString("likes", comment: "") + ": \(posts[indexPath.row].likes)"
+                cell.viewsLabel.text = NSLocalizedString("views", comment: "") + ": \(posts[indexPath.row].views)"
                 return cell
                 
             }

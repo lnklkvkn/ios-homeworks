@@ -27,12 +27,12 @@ class CheckerService: CheckerServiceProtocol {
                 switch err.code {
                 case AuthErrorCode.userNotFound.rawValue:
                     
-                    let alert = UIAlertController(title: "Пользователь не найден", message: "Зарегистрировать новый аккаунт?", preferredStyle: .alert)
+                    let alert = UIAlertController(title: NSLocalizedString("user.is.not.found", comment: ""), message: NSLocalizedString("offer.to.register", comment: ""), preferredStyle: .alert)
                     
-                    let firstAction = UIAlertAction(title: "Отмена", style: .default) { _ in
+                    let firstAction = UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .default) { _ in
                         print("Отмена регистрации ")
                     }
-                    let secondAction = UIAlertAction(title: "Регистрация", style: .default) { _ in
+                    let secondAction = UIAlertAction(title: NSLocalizedString("registration", comment: ""), style: .default) { _ in
                         print("Зарегистрирован новый пользователь: \(email)")
                         self.signUp(withEmail: email, password: password)
                     }
@@ -40,7 +40,7 @@ class CheckerService: CheckerServiceProtocol {
                     alert.addAction(secondAction)
                     UIApplication.topViewController()!.present(alert, animated: true)
                 default:
-                    AlertErrorSample.shared.alert(title: "Ошибка входа", message: error.localizedDescription)
+                    AlertErrorSample.shared.alert(title: NSLocalizedString("login.failed", comment: ""), message: error.localizedDescription)
 
                 }
             } else {
@@ -52,9 +52,9 @@ class CheckerService: CheckerServiceProtocol {
     func signUp(withEmail email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { _ , error in
             if let error {
-                AlertErrorSample.shared.alert(title: "Ошибка регистрации", message: error.localizedDescription)
+                AlertErrorSample.shared.alert(title: NSLocalizedString("login.failed", comment: ""), message: error.localizedDescription)
             } else {
-                AlertErrorSample.shared.alert(title: "Успешная регистрация", message: "Ваш аккаунт создан!")
+                AlertErrorSample.shared.alert(title: NSLocalizedString("successful.registration", comment: ""), message: NSLocalizedString("reg.congr", comment: ""))
             }
         }
     }

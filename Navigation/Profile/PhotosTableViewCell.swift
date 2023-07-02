@@ -123,6 +123,6 @@ struct Photos {
     var fourPhoto: String
 }
 
-var photos = Photos(title: "Photos", arrow: "arrow.right", fPhoto: "1", sPhoto: "2", tPhoto: "3", fourPhoto: "4")
+var photos = Photos(title: NSLocalizedString("photos", comment: ""), arrow: "arrow.right", fPhoto: "1", sPhoto: "2", tPhoto: "3", fourPhoto: "4")
 
 

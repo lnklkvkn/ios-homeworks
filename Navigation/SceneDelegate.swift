@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         tabBarController.viewControllers = [ feedNavController , logInViewController]
         tabBarController.viewControllers?.enumerated().forEach {
-            $1.tabBarItem.title = $0 == 0 ? "Feed" : "Profile"
+            $1.tabBarItem.title = $0 == 0 ? NSLocalizedString("feed.controller", comment: "") : NSLocalizedString("profile.controller", comment: "")
             $1.tabBarItem.image = $0 == 0 ? UIImage(systemName: "house.fill") : UIImage(systemName: "person.fill")
         }
         self.window?.rootViewController = tabBarController
