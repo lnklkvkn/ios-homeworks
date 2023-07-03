@@ -15,6 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        let localNotificationService = LocalNotificationsService()
+        localNotificationService.registeForLatestUpdatesIfPossible()
+        
         return true
     }
 
@@ -48,6 +53,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {}
+
+//    func applicationDidFinishLaunching(_ application: UIApplication) {
+//        let localNotificationService = LocalNotificationsService()
+//        localNotificationService.registeForLatestUpdatesIfPossible()
+//    }
 
 }
 
