@@ -25,7 +25,6 @@ class LogInViewController: UIViewController {
        return imageView
    }()
     
-
     private lazy var textFieldsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
@@ -33,7 +32,6 @@ class LogInViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-    
     
     private lazy var loginTextField: UITextField = {
         let textField = UITextField()
@@ -47,7 +45,6 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         textField.placeholder = "Email of phone"
         textField.translatesAutoresizingMaskIntoConstraints = false
-        
         return textField
     }()
     
@@ -64,7 +61,6 @@ class LogInViewController: UIViewController {
         textField.autocorrectionType = .no
         textField.placeholder = "Password"
         textField.translatesAutoresizingMaskIntoConstraints = false
-
         return textField
     }()
     
@@ -79,7 +75,6 @@ class LogInViewController: UIViewController {
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(self.didTapLogInButton), for: .touchUpInside)
-
         return button
     }()
     
@@ -89,46 +84,27 @@ class LogInViewController: UIViewController {
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .selected)
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .highlighted)
         button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .disabled)
-
         button.setTitle("Sign up", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
-
         button.addTarget(self, action: #selector(self.didTapSignUpButton), for: .touchUpInside)
-
         return button
     }()
     
-    @objc private func didTapLogInButton() {
-        
-        let vc = ProfileViewController()
-        
-        #if DEBUG
-
-        let service = TestUserService()
-
-        #else
-
-        let service = CurrentUserService()
-
-        #endif
-        
-        if let login = loginTextField.text, let password = passwordTextField.text {
-            if delegate.delegateCheck(login: login, password: password) {
-                vc.user = service.user
-                vc.modalPresentationStyle = .automatic
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
-    }
-   
-    @objc private func didTapSignUpButton() {
-        
-        if let login = loginTextField.text, let password = passwordTextField.text {
-            delegate.delegateSignIn(login: login, password: password)
-        }
-    }
+    private lazy var biometricLoginButton: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(UIImage(named: "blue_pix"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .selected)
+        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .highlighted)
+        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .disabled)
+        button.setTitle("Biometric log in", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(self.didTapBiometricLoginButton), for: .touchUpInside)
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,11 +114,48 @@ class LogInViewController: UIViewController {
         setupAddTargetIsNotEmptyTextFields()
     }
     
+    private func getProfileVC() -> ProfileViewController {
+        let vc = ProfileViewController()
+        #if DEBUG
+        let service = TestUserService()
+        #else
+        let service = CurrentUserService()
+        #endif
+        vc.user = service.user
+        vc.modalPresentationStyle = .automatic
+        return vc
+    }
+    
+    @objc private func didTapBiometricLoginButton(isAuthorizationFinished: Bool) {
+        let serv = LocalAuthorizationService()
+        serv.authorizeIfPossible { success in
+            if success {
+                let vc = self.getProfileVC()
+                self.navigationController?.pushViewController(vc, animated: true)
+            } else {
+                return
+            }
+        }
+    }
+    
+    @objc private func didTapLogInButton() {
+        if let login = loginTextField.text, let password = passwordTextField.text {
+            if delegate.delegateCheck(login: login, password: password) {
+                let vc = getProfileVC()
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+    }
+    
+    @objc private func didTapSignUpButton() {
+        if let login = loginTextField.text, let password = passwordTextField.text {
+            delegate.delegateSignIn(login: login, password: password)
+        }
+    }
+    
     func setupAddTargetIsNotEmptyTextFields() {
-        
         logInButton.isEnabled = false
         signUpButton.isEnabled = false
-        
         loginTextField.addTarget(self, action: #selector(textFieldsIsNotEmpty),
                                     for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textFieldsIsNotEmpty),
@@ -150,9 +163,7 @@ class LogInViewController: UIViewController {
     }
         
     @objc func textFieldsIsNotEmpty(sender: UITextField) {
-        
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
-        
         guard let login = loginTextField.text, !login.isEmpty,
               let password = passwordTextField.text, password.count > 5
         else {
@@ -163,18 +174,16 @@ class LogInViewController: UIViewController {
     }
     
     private func setupView() {
-        
         self.view.backgroundColor = .systemBackground
-        
         self.view.addSubview(self.scrollView)
         self.scrollView.addSubview(self.logoImageView)
         self.scrollView.addSubview(self.textFieldsStackView)
         self.scrollView.addSubview(self.logInButton)
         self.scrollView.addSubview(self.signUpButton)
-
+        self.scrollView.addSubview(self.biometricLoginButton)
         self.textFieldsStackView.addArrangedSubview(self.loginTextField)
         self.textFieldsStackView.addArrangedSubview(self.passwordTextField)
-   
+        
         NSLayoutConstraint.activate([
             self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
             self.scrollView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
@@ -199,7 +208,12 @@ class LogInViewController: UIViewController {
             self.signUpButton.topAnchor.constraint(equalTo: self.logInButton.bottomAnchor, constant: 8),
             self.signUpButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             self.signUpButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
-            self.signUpButton.heightAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.heightAnchor, multiplier: 0.06112469)
+            self.signUpButton.heightAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.heightAnchor, multiplier: 0.06112469),
+            
+            self.biometricLoginButton.topAnchor.constraint(equalTo: self.signUpButton.bottomAnchor, constant: 8),
+            self.biometricLoginButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            self.biometricLoginButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            self.biometricLoginButton.heightAnchor.constraint(equalTo: self.scrollView.safeAreaLayoutGuide.heightAnchor, multiplier: 0.06112469)
             ])
     }
 
@@ -227,16 +241,11 @@ class LogInViewController: UIViewController {
 
     @objc private func didShowKeyboard(_ notification: Notification) {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-              let keyboardRectangle = keyboardFrame.cgRectValue
-              let keyboardHeight = keyboardRectangle.height
-
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
             let signUpButtonBottomPointY = self.signUpButton.frame.origin.y + self.signUpButton.frame.height
             let keyboardOriginY =  self.view.frame.height - keyboardHeight
-
-            let offset = keyboardOriginY <= signUpButtonBottomPointY
-            ? signUpButtonBottomPointY - keyboardOriginY + 16
-            : 0
-
+            let offset = keyboardOriginY <= signUpButtonBottomPointY ? signUpButtonBottomPointY - keyboardOriginY + 16 : 0
             self.scrollView.contentOffset = CGPoint(x: 0, y: offset)
         }
     }
