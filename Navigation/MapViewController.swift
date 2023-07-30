@@ -85,12 +85,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 }
                 guard let responce = responce else {
                     if let error = error {
+                        print("нет ответа")
                         print(error.localizedDescription)
                     }
                     return
                 }
                 if let route = responce.routes.first {
+                    self.mapView.delegate = self
+                    print("есть ответ по маршруту")
                     self.mapView.addOverlay(route.polyline)
+                    let rect = route.polyline.boundingMapRect
+                    self.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
                 }
             }
         } else {
@@ -159,11 +164,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     internal func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
-    
+        
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let renderer = MKPolygonRenderer(overlay: overlay)
-        renderer.strokeColor = UIColor.white
-        renderer.lineWidth = 5.0
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = UIColor.red
+        renderer.lineWidth = 3
         return renderer
     }
 }
