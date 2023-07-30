@@ -40,6 +40,7 @@
 		FDEA3F4629E01E6700C78389 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FDEA3F4429E01E6700C78389 /* GoogleService-Info.plist */; };
 		FDEA3F4929E03C2600C78389 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FDEA3F4829E03C2600C78389 /* FirebaseAuth */; };
 		FDFA765B28E894C000BA8CF8 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFA765A28E894C000BA8CF8 /* PhotosTableViewCell.swift */; };
+		FDFCB5882A7008D800DA0B86 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFCB5872A7008D800DA0B86 /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		FDD9828728CB34E30076D9B5 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		FDEA3F4429E01E6700C78389 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FDFA765A28E894C000BA8CF8 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
+		FDFCB5872A7008D800DA0B86 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 				FDC74F23289E8C6A0009604F /* AppDelegate.swift */,
 				FDC74F25289E8C6A0009604F /* SceneDelegate.swift */,
 				FD2197742A33AC26006F82D9 /* SavedPostsViewController.swift */,
+				FDFCB5872A7008D800DA0B86 /* MapViewController.swift */,
 				FD8F446128ABBF27003041D1 /* FeedViewController.swift */,
 				FD8FC76829E1A4CF00C1F8E2 /* LogIn */,
 				FD1204B428B63169006AE0EE /* Profile */,
@@ -344,6 +347,7 @@
 				FD2197752A33AC26006F82D9 /* SavedPostsViewController.swift in Sources */,
 				FDA5A03229E41388003F659F /* LoginInspector.swift in Sources */,
 				FD37152728C752B800616C30 /* LogInViewController.swift in Sources */,
+				FDFCB5882A7008D800DA0B86 /* MapViewController.swift in Sources */,
 				FDC81C952A347ADE0092F444 /* CoreDataManager.swift in Sources */,
 				FDC81C932A3477290092F444 /* Post+CoreDataProperties.swift in Sources */,
 				FD863E4228AE666000475D1C /* InfoViewController.swift in Sources */,
