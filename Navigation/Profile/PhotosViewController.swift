@@ -6,9 +6,44 @@
 //
 
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 class PhotosViewController: UIViewController {
 
+
+    private func makePhotos() -> [UIImage]? {
+        var arr = [UIImage]()
+        for i in (1...20) {
+            guard let a = UIImage(named: String(i)) else { return nil }
+            arr.append(a)
+        }
+        return arr
+    }
+    
+    private func blackCollection() -> [UIImage] {
+        var arr = [UIImage]()
+        for _ in (1...20) {
+            arr.append(UIImage(systemName: "person")!)
+        }
+        return arr
+    }
+    
+//    private func filterPhotos() -> [UIImage]? {
+//
+//        var filtredArr = [UIImage]()
+//
+//        for i in (1...20) {
+//
+//            let blur = CIFilter.sepiaTone()
+//            guard let a = UIImage(named: String(i)) else { return nil }
+//            let startImage = CIImage(image: (a))
+//            blur.inputImage = startImage
+//            let outputImage = UIImage(ciImage: blur.outputImage!)
+//            filtredArr.append(outputImage)
+//        }
+//        return filtredArr
+//    }
     
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -33,6 +68,7 @@ class PhotosViewController: UIViewController {
         super.viewDidLoad()
         self.setupNavigationBar()
         self.setupView()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -47,7 +83,7 @@ class PhotosViewController: UIViewController {
     private func setupNavigationBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationController?.visibleViewController?.navigationItem.title = "Photo Gallery"
-        
+//        self.navigationController?.visibleViewController?.navigationItem.tintColor = Palette.tintBackgroundColor
         self.navigationController?.navigationBar.topItem?.title = "Back"
         self.navigationController?.navigationBar.isHidden = false
     }
@@ -63,12 +99,22 @@ class PhotosViewController: UIViewController {
             self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if UITraitCollection.current.userInterfaceStyle == .dark {
+            collectionView.reloadData()
+        } else {
+            collectionView.reloadData()
+        }
+    }
 }
     
 extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photosCollection.count
+        return 20
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -79,7 +125,14 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         }
 
         cell.clipsToBounds = true
-        cell.setup(with: photosCollection[indexPath.row])
+        
+        if UITraitCollection.current.userInterfaceStyle == .dark {
+            let a = blackCollection()
+            cell.setup(with: a[indexPath.row])
+        } else {
+            let a = makePhotos()
+            cell.setup(with: a![indexPath.row])
+        }
         return cell
     }
     
@@ -93,6 +146,9 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         
         return CGSize(width: itemWidth, height: itemWidth)
     }
+    
+
+    
 }
     
 

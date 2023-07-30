@@ -20,12 +20,10 @@ class LogInViewController: UIViewController {
     
     private lazy var logoImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "logo")
         imageView.translatesAutoresizingMaskIntoConstraints = false
        return imageView
    }()
     
-
     private lazy var textFieldsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
@@ -33,7 +31,6 @@ class LogInViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-    
     
     private lazy var loginTextField: UITextField = {
         let textField = UITextField()
@@ -70,10 +67,11 @@ class LogInViewController: UIViewController {
     
     private lazy var logInButton: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(named: "blue_pix"), for: .normal)
-        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .selected)
-        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .highlighted)
-        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .disabled)
+//        button.setBackgroundImage(UIImage(named: "blue_pix"), for: .normal)
+//        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .selected)
+//        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .highlighted)
+//        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .disabled)
+        button.backgroundColor = Palette.buttonBackgroundColor
         button.setTitle("Log in", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 10
@@ -85,11 +83,11 @@ class LogInViewController: UIViewController {
     
     private lazy var signUpButton: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(named: "blue_pix"), for: .normal)
-        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .selected)
-        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .highlighted)
-        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .disabled)
-
+//        button.setBackgroundImage(UIImage(named: "blue_pix"), for: .normal)
+//        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .selected)
+//        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .highlighted)
+//        button.setBackgroundImage(UIImage(named: "blue_pix_08"), for: .disabled)
+        button.backgroundColor = Palette.buttonBackgroundColor
         button.setTitle("Sign up", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 10
@@ -104,23 +102,23 @@ class LogInViewController: UIViewController {
         
         let vc = ProfileViewController()
         
-        #if DEBUG
-
-        let service = TestUserService()
-
-        #else
-
-        let service = CurrentUserService()
-
-        #endif
+//        #if DEBUG
+//
+//        let service = TestUserService()
+//
+//        #else
+//
+//        let service = CurrentUserService()
+//
+//        #endif
         
-        if let login = loginTextField.text, let password = passwordTextField.text {
-            if delegate.delegateCheck(login: login, password: password) {
-                vc.user = service.user
+//        if let login = loginTextField.text, let password = passwordTextField.text {
+//            if delegate.delegateCheck(login: login, password: password) {
+//                vc.user = service.user
                 vc.modalPresentationStyle = .automatic
                 self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
+//            }
+//        }
     }
    
     @objc private func didTapSignUpButton() {
@@ -136,6 +134,8 @@ class LogInViewController: UIViewController {
         self.setupGesture()
         self.navigationController?.navigationBar.isHidden = true
         setupAddTargetIsNotEmptyTextFields()
+        view.backgroundColor = Palette.viewBackgroundColor
+        installLogo()
     }
     
     func setupAddTargetIsNotEmptyTextFields() {
@@ -154,7 +154,7 @@ class LogInViewController: UIViewController {
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
         
         guard let login = loginTextField.text, !login.isEmpty,
-              let password = passwordTextField.text, password.count > 5
+              let password = passwordTextField.text, password.count >= 0
         else {
             return
         }
@@ -248,6 +248,19 @@ class LogInViewController: UIViewController {
     @objc private func hideKeyboard() {
         self.view.endEditing(true)
         self.scrollView.setContentOffset(.zero, animated: true)
+    }
+    
+    private func installLogo() {
+        if UITraitCollection.current.userInterfaceStyle == .dark {
+            logoImageView.image = UIImage(named: "logo2")
+        } else {
+            logoImageView.image = UIImage(named: "logo")
+        }
+    }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        installLogo()
     }
 }
 

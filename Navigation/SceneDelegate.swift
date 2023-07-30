@@ -25,10 +25,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.window = UIWindow(windowScene: windowScene)
         
-        func createFeedNavController() -> UINavigationController {
-            let feedVC = FeedViewController()
-            feedVC.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(systemName: "house.fill"), tag: 0)
-            return UINavigationController(rootViewController: feedVC)
+        func createMapViewController() -> UINavigationController {
+            let mapVC = MapViewController()
+            mapVC.tabBarItem = UITabBarItem(title: "Map", image: UIImage(systemName: "house.fill"), tag: 0)
+            return UINavigationController(rootViewController: mapVC)
         }
         
         func createLoginViewController() -> UINavigationController {
@@ -45,7 +45,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         func createTabBarController() -> UITabBarController {
             let tabBarController = UITabBarController()
-            tabBarController.viewControllers = [ createFeedNavController() , createLoginViewController(), createSavedPostsViewController()]
+            tabBarController.viewControllers = [ createMapViewController() , createLoginViewController(), createSavedPostsViewController()]
             return tabBarController
             
         }
